@@ -1,0 +1,21 @@
+---
+layout: default
+title: Using setInterval to mock animate 
+---
+
+<h2>{{ page.title }}</h2>
+<p>TO REPLACE THE JQUERY, I BEGIN TO THINKING ABOUT HOW TO REPLASE THE $ FUNCTION</p>
+<h3>Animate - move</h>
+<pre>
+...... // get the positon from the element you want to move.
+
+var timerId = setInterval(frameMoveRight, 5);
+function frameMoveRight() {
+    if (position == 260) {
+        clearInterval(timerId);
+    } else {
+        position = position - 10;
+        element.style.marginLeft = postion + "px"; //or other unit, e.g rem
+    }
+}
+</pre>

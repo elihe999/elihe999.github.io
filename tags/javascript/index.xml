@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Javascript on My Blog Site</title>
+    <link>/tags/javascript/</link>
+    <description>Recent content in Javascript on My Blog Site</description>
+    <generator>Hugo -- 0.158.0</generator>
+    <language>en-us</language>
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <lastBuildDate>Thu, 20 Mar 2025 10:00:00 +0800</lastBuildDate>
+    <atom:link href="/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaScript Async Patterns</title>
+      <link>/posts/js-async/</link>
+      <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/js-async/</guid>
+      <description>&lt;p&gt;From callbacks to Promises to async/await – a deep dive into asynchronous JavaScript patterns and how to avoid common pitfalls.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

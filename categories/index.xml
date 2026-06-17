@@ -2,10 +2,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Categories on My Blog Site</title>
-    <link>https://elihe999.github.io/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on My Blog Site</description>
-    <generator>Hugo -- 0.155.2</generator>
+    <generator>Hugo -- 0.158.0</generator>
     <language>en-us</language>
-    <atom:link href="https://elihe999.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <lastBuildDate>Thu, 20 Mar 2025 10:00:00 +0800</lastBuildDate>
+    <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tech</title>
+      <link>/categories/tech/</link>
+      <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/categories/tech/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Life</title>
+      <link>/categories/life/</link>
+      <pubDate>Thu, 20 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/categories/life/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>General</title>
+      <link>/categories/general/</link>
+      <pubDate>Wed, 01 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/categories/general/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

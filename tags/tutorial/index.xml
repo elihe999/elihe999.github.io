@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tutorial on My Blog Site</title>
+    <link>/tags/tutorial/</link>
+    <description>Recent content in Tutorial on My Blog Site</description>
+    <generator>Hugo -- 0.158.0</generator>
+    <language>en-us</language>
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <lastBuildDate>Sat, 01 Feb 2025 10:00:00 +0800</lastBuildDate>
+    <atom:link href="/tags/tutorial/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CSS Grid Layout Guide</title>
+      <link>/posts/css-grid-guide/</link>
+      <pubDate>Sat, 01 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/css-grid-guide/</guid>
+      <description>&lt;p&gt;CSS Grid is a powerful layout system that makes responsive design much easier. Learn about grid templates, auto-fit, and responsive columns.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Getting Started with Hugo Static Sites</title>
+      <link>/posts/hugo-intro/</link>
+      <pubDate>Wed, 15 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/hugo-intro/</guid>
+      <description>&lt;p&gt;Hugo is one of the fastest static site generators. In this post, we explore how to set up a new site, choose a theme, and start writing content.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

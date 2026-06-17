@@ -2,10 +2,83 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on My Blog Site</title>
-    <link>https://elihe999.github.io/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on My Blog Site</description>
-    <generator>Hugo -- 0.155.2</generator>
+    <generator>Hugo -- 0.158.0</generator>
     <language>en-us</language>
-    <atom:link href="https://elihe999.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <lastBuildDate>Thu, 20 Mar 2025 10:00:00 +0800</lastBuildDate>
+    <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Javascript</title>
+      <link>/tags/javascript/</link>
+      <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/javascript/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Programming</title>
+      <link>/tags/programming/</link>
+      <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>/tags/go/</link>
+      <pubDate>Wed, 05 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Japan</title>
+      <link>/tags/japan/</link>
+      <pubDate>Thu, 20 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/japan/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Travel</title>
+      <link>/tags/travel/</link>
+      <pubDate>Thu, 20 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/travel/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Css</title>
+      <link>/tags/css/</link>
+      <pubDate>Sat, 01 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/css/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tutorial</title>
+      <link>/tags/tutorial/</link>
+      <pubDate>Sat, 01 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hugo</title>
+      <link>/tags/hugo/</link>
+      <pubDate>Wed, 15 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/hugo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Blog</title>
+      <link>/tags/blog/</link>
+      <pubDate>Wed, 01 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/blog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Welcome</title>
+      <link>/tags/welcome/</link>
+      <pubDate>Wed, 01 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/welcome/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

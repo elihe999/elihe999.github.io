@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on My Blog Site</title>
+    <link>/posts/</link>
+    <description>Recent content in Posts on My Blog Site</description>
+    <generator>Hugo -- 0.158.0</generator>
+    <language>en-us</language>
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <lastBuildDate>Thu, 20 Mar 2025 10:00:00 +0800</lastBuildDate>
+    <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaScript Async Patterns</title>
+      <link>/posts/js-async/</link>
+      <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/js-async/</guid>
+      <description>&lt;p&gt;From callbacks to Promises to async/await – a deep dive into asynchronous JavaScript patterns and how to avoid common pitfalls.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Understanding Go Modules</title>
+      <link>/posts/go-modules/</link>
+      <pubDate>Wed, 05 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/go-modules/</guid>
+      <description>&lt;p&gt;Go modules are the standard dependency management system for Go. This guide covers creating a module, managing dependencies, and versioning.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My Travel Journal: Tokyo Trip</title>
+      <link>/posts/tokyo-trip/</link>
+      <pubDate>Thu, 20 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/tokyo-trip/</guid>
+      <description>&lt;p&gt;A wonderful journey through Tokyo, exploring hidden gems, local cuisine, and the perfect blend of tradition and modernity.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>CSS Grid Layout Guide</title>
+      <link>/posts/css-grid-guide/</link>
+      <pubDate>Sat, 01 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/css-grid-guide/</guid>
+      <description>&lt;p&gt;CSS Grid is a powerful layout system that makes responsive design much easier. Learn about grid templates, auto-fit, and responsive columns.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Getting Started with Hugo Static Sites</title>
+      <link>/posts/hugo-intro/</link>
+      <pubDate>Wed, 15 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/hugo-intro/</guid>
+      <description>&lt;p&gt;Hugo is one of the fastest static site generators. In this post, we explore how to set up a new site, choose a theme, and start writing content.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Welcome to My Blog</title>
+      <link>/posts/welcome/</link>
+      <pubDate>Wed, 01 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/welcome/</guid>
+      <description>&lt;p&gt;This is my first blog post. More content coming soon!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

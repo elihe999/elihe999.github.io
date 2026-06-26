@@ -2,75 +2,143 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>/tags/business-model/</loc>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
     <loc>/categories/</loc>
-    <lastmod>2025-03-20T10:00:00+08:00</lastmod>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/tags/ecommerce/</loc>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/tags/system-design/</loc>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/tags/</loc>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/categories/tech/</loc>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/</loc>
+    <lastmod>2026-06-26T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/tags/javascript/</loc>
     <lastmod>2025-03-20T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
-    <loc>/posts/js-async/</loc>
+    <loc>/posts/javascript-async-patterns/</loc>
     <lastmod>2025-03-20T10:00:00+08:00</lastmod>
-  </url><url>
-    <loc>/</loc>
-    <lastmod>2025-03-20T10:00:00+08:00</lastmod>
-  </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2025-03-20T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/tags/programming/</loc>
     <lastmod>2025-03-20T10:00:00+08:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2025-03-20T10:00:00+08:00</lastmod>
-  </url><url>
-    <loc>/categories/tech/</loc>
-    <lastmod>2025-03-20T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/tags/go/</loc>
     <lastmod>2025-03-05T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
-    <loc>/posts/go-modules/</loc>
+    <loc>/posts/understanding-go-modules/</loc>
     <lastmod>2025-03-05T10:00:00+08:00</lastmod>
-  </url><url>
-    <loc>/tags/japan/</loc>
-    <lastmod>2025-02-20T10:00:00+08:00</lastmod>
-  </url><url>
-    <loc>/categories/life/</loc>
-    <lastmod>2025-02-20T10:00:00+08:00</lastmod>
-  </url><url>
-    <loc>/posts/tokyo-trip/</loc>
-    <lastmod>2025-02-20T10:00:00+08:00</lastmod>
-  </url><url>
-    <loc>/tags/travel/</loc>
-    <lastmod>2025-02-20T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/tags/css/</loc>
     <lastmod>2025-02-01T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
-    <loc>/posts/css-grid-guide/</loc>
+    <loc>/posts/css-grid-layout-guide/</loc>
     <lastmod>2025-02-01T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/tags/tutorial/</loc>
     <lastmod>2025-02-01T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
-    <loc>/posts/hugo-intro/</loc>
+    <loc>/posts/getting-started-with-hugo-static-sites/</loc>
     <lastmod>2025-01-15T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/tags/hugo/</loc>
     <lastmod>2025-01-15T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/tags/blog/</loc>
     <lastmod>2025-01-01T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/categories/general/</loc>
     <lastmod>2025-01-01T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/tags/welcome/</loc>
     <lastmod>2025-01-01T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
-    <loc>/posts/welcome/</loc>
+    <loc>/posts/welcome-to-my-blog/</loc>
     <lastmod>2025-01-01T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/tags/japan/</loc>
+    <lastmod>2024-02-20T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/categories/life/</loc>
+    <lastmod>2024-02-20T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/posts/my-travel-journal-tokyo-trip/</loc>
+    <lastmod>2024-02-20T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url><url>
+    <loc>/tags/travel/</loc>
+    <lastmod>2024-02-20T10:00:00+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url><url>
     <loc>/search/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

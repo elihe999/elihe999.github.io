@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Javascript on Eli He&#39;s Blog</title>
+    <link>/tags/javascript/</link>
+    <description>Recent content in Javascript on Eli He&#39;s Blog</description>
+    <generator>Hugo -- 0.158.0</generator>
+    <language>en-us</language>
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <copyright>{year} Eli He</copyright>
+    <lastBuildDate>Thu, 20 Mar 2025 10:00:00 +0800</lastBuildDate>
+    <atom:link href="/tags/javascript/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaScript Async Patterns</title>
+      <link>/posts/javascript-async-patterns/</link>
+      <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/javascript-async-patterns/</guid>
+      <description>&lt;p&gt;从回调到 Promise，再到 async/await：异步之河的摆渡人&lt;/p&gt;
+&lt;p&gt;我初识 JavaScript 时，它像一条湍急而混乱的河。那时我们用回调函数过河，层层嵌套，像在河心垒石。一个接一个的函数压下来，代码缩进越来越深，直到变成所谓的“回调地狱”——维护代码的人，像困在迷宫里的守夜人，再也找不到出口。&lt;/p&gt;
+&lt;p&gt;后来，Promise 出现了。它像一座桥，横跨在异步的河流之上。
+&amp;ldquo;.then()&amp;rdquo; 像桥上的灯，一步步照亮前行的路；
+&amp;ldquo;.catch()&amp;rdquo; 则是桥下的网，哪怕失足，也不会坠入深渊。我们终于可以把“成功”与“失败”清晰地分开，不再让错误在层层回调中悄然蒸发。&lt;/p&gt;
+&lt;p&gt;可桥再稳，走的人多了，依旧会觉得疲惫。于是 ES2017 带来了&amp;quot;async/await&amp;quot;，像一艘平稳的渡轮。你站在甲板上，代码看起来像同步的那样优雅，却依旧拥有异步的力量。
+&amp;ldquo;await&amp;rdquo; 是短暂的停顿，像呼吸之间的留白；
+&amp;ldquo;async&amp;rdquo; 则是航向，宣告这个函数终将驶向远方。&lt;/p&gt;
+&lt;p&gt;但河流总有暗礁。忘记
+&amp;ldquo;await&amp;rdquo;，就像跳上一艘无人掌舵的小船，不知何时就会撞上礁石；滥用&amp;quot;try/catch&amp;quot;，则可能把错误吞进漆黑的河水，再也浮不上来；而在循环里不加思索地使用 &amp;ldquo;await&amp;rdquo;，又会把本该并行的溪流，硬生生堵成一条窄渠。&lt;/p&gt;
+&lt;p&gt;异步的进化，不只是语法的变迁，更是思维方式的成熟。从混乱到秩序，从绕行到直抵，我们学会了在不确定中寻找确定，在等待中保持清醒。&lt;/p&gt;
+&lt;p&gt;JavaScript 的异步之旅，从未停止流动。而我们，也只是这条河上的摆渡人——愿每一次&amp;quot;await&amp;quot;，都值得被温柔地 &amp;ldquo;resolve&amp;rdquo;。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

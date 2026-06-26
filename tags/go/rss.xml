@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Go on Eli He&#39;s Blog</title>
+    <link>/tags/go/</link>
+    <description>Recent content in Go on Eli He&#39;s Blog</description>
+    <generator>Hugo -- 0.158.0</generator>
+    <language>en-us</language>
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <copyright>{year} Eli He</copyright>
+    <lastBuildDate>Wed, 05 Mar 2025 10:00:00 +0800</lastBuildDate>
+    <atom:link href="/tags/go/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Go Modules</title>
+      <link>/posts/understanding-go-modules/</link>
+      <pubDate>Wed, 05 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/understanding-go-modules/</guid>
+      <description>&lt;p&gt;Understanding Go Modules&lt;/p&gt;
+&lt;p&gt;我最初接触 Go 的时候，它像一座没有围墙的城。代码就那样散落在
+&amp;ldquo;$GOPATH/src&amp;rdquo; 下面，像旧书店里堆得老高的纸卷——你知道它们有用，却总在找某本书时碰落一整摞。那时我们常说：“GOPATH 就是家。”可家的规矩太宽，宽到依赖飘在风里，今天能跑的程序，明天就可能因为一个第三方库的更新而崩塌。&lt;/p&gt;
+&lt;p&gt;后来，Go Modules 来了。&lt;/p&gt;
+&lt;p&gt;它不是一声惊雷，而像一场迟来的春雨。第一次在终端敲下
+&amp;ldquo;go mod init&amp;rdquo;，屏幕上安静地吐出一行
+&amp;ldquo;go.mod&amp;rdquo;，那一刻，我竟有些莫名的感动。这个文件不大，却像给漂泊的代码发了身份证：谁是你，你依赖谁，你要去往哪里的版本。不再盲从
+&amp;ldquo;master&amp;rdquo; 分支的潮水，不再被不可控的更新淹没。
+&amp;ldquo;v1.0.0&amp;rdquo;、
+&amp;ldquo;v1.2.3&amp;rdquo;——语义化版本像灯塔，把黑夜里的船一盏盏引回港湾。&lt;/p&gt;
+&lt;p&gt;我开始学着理解它，而不只是使用它。&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;go.sum&amp;rdquo; 不是累赘，是守护者。它默默记下每一个模块的哈希值，像守夜人核对每一个进出城门的旅人。你不常注意它，但它一直在那里，确保你拿到的，正是你以为的那个世界。&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;replace&amp;rdquo; 是我调试时的小秘密，本地替换掉远程包，像把远方的山搬进后院，细细端详。&lt;/p&gt;
+&lt;p&gt;&amp;ldquo;exclude&amp;rdquo; 则是温柔的拒绝——有些版本，注定不该与你同行。&lt;/p&gt;
+&lt;p&gt;最动人的是
+&amp;ldquo;minimal version selection&amp;rdquo;。Go 没有选择“最新”，而是选择“足够”。它不相信永远向上，只相信可重复、可依赖。这像极了成年人的爱情：不追最热烈，只求最安稳。&lt;/p&gt;
+&lt;p&gt;如今，我的项目整齐得像一座座小小的城邦。
+&amp;ldquo;go.mod&amp;rdquo; 是宪法，
+&amp;ldquo;go.sum&amp;rdquo; 是历史，
+&amp;ldquo;vendor&amp;rdquo; 是粮仓。我再也不必在深夜因为一个未知的依赖错误而惊醒。代码终于可以安心地生长，像树一样，年轮清晰，根脉扎实。&lt;/p&gt;
+&lt;p&gt;Understanding Go Modules，或许不只是理解一个工具。&lt;/p&gt;
+&lt;p&gt;它让我明白：真正的自由，从来不是无拘无束，而是清楚地知道——边界在哪里，归宿在何方。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

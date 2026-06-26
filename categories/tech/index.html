@@ -5,10 +5,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Tech | My Blog Site</title>
+<title>Tech | Eli He&#39;s Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="A personal blog about technology and life">
-<meta name="author" content="map[email:eli@example.com name:Eli He]">
+<meta name="description" content="A personal blog about technology, programming, and life">
+<meta name="author" content="Eli He">
 <link rel="canonical" href="/categories/tech/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.9e629b1e99691abf99756971d99b108dcf5c6bd20f24c704002ca05c23c3385b.css" integrity="" rel="preload stylesheet" as="style">
 <link rel="icon" href="/favicon.ico">
@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="/categories/tech/index.xml" title="rss">
+<link rel="alternate" type="application/rss+xml" href="/categories/tech/rss.xml" title="rss">
 <link rel="alternate" hreflang="en" href="/categories/tech/">
 <noscript>
     <style>
@@ -72,21 +72,21 @@
     }
 
 </script><meta property="og:url" content="/categories/tech/">
-  <meta property="og:site_name" content="My Blog Site">
+  <meta property="og:site_name" content="Eli He&#39;s Blog">
   <meta property="og:title" content="Tech">
-  <meta property="og:description" content="A personal blog about technology and life">
+  <meta property="og:description" content="A personal blog about technology, programming, and life">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tech">
-<meta name="twitter:description" content="A personal blog about technology and life">
+<meta name="twitter:description" content="A personal blog about technology, programming, and life">
 
 </head>
 <body class="list" id="top">
     <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="My Blog Site (Alt + H)">My Blog Site</a>
+            <a href="/" accesskey="h" title="Eli He&#39;s Blog (Alt + H)">Eli He&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -135,7 +135,7 @@
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header">
+<header class="page-header"><div class="breadcrumbs"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/categories/">Categories</a></div>
   <h1>
     Tech
   </h1>
@@ -143,15 +143,45 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">电商核心业务模型图谱
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>电商不是&#34;做一个商城页面&#34;那么简单。它是用户、商品、订单、库存、支付、营销、物流七大实体的精密咬合。理解这七者如何串联，就理解了电商系统的骨架。建模的难点不是定义字段，而是定义清楚&#34;它是什么、不是什么&#34;。
+01 七大核心实体 每个实体都不是孤立的数据表，它背后都有一套业务规则和&#34;坑&#34;。下面每个卡片都标注了建模时最容易翻车的地方。
+用户 电商里所有行为的发起者，决定了&#34;谁在买、为什么买、还会不会买&#34;。
+id: user_id 分层: 等级 / 会员 / 画像 关联: 订单 / 收藏 / 地址 ⚠️ PITFALL: 用户、会员、账户是三个东西。会员是身份，账户是钱袋子，用户是登录身份。一个手机号背后可能挂多个会员身份（主账号&#43;子账号）。
+商品 电商的&#34;货&#34;。表面上是个名字&#43;图片，实际上是个多层级复杂模型。
+SPU: iPhone 15 Pro SKU: 银色 256G 类目: 三级分类树 ⚠️ PITFALL: SPU和SKU必须分开。一个SPU对应多个SKU（颜色×尺码×版本）。后期加&#34;套装版&#34;或&#34;定制款&#34;，整库都要重构——前期必须留扩展口。
+订单 电商的&#34;交易凭证&#34;。表面是流程，实质是一个状态机。
+id: order_id 结构: 主单 &#43; 子单 &#43; 订单项 状态: 12&#43; 种 ⚠️ PITFALL: 状态机设计时，少写了&#34;已退款&#34;或&#34;部分退款&#34;分支，三个月后业务要做退款功能时整库重写。父子订单、合并支付、拆单发货也要早期想清楚。
+库存 电商CTO的噩梦。表面是加减，实际是四种库存的精细运营。
+实物库存: 仓库里真实数量 可销售: 上架 &#43; 未锁定 预占/锁定: 下单但未支付 ⚠️ PITFALL: 秒杀时如果用单一库存字段，要么超卖要么少卖。必须区分&#34;预占库存&#34;和&#34;实际扣减&#34;两个时机，订单超时不付还要回滚。
+支付 资金的入口。订单和资金流的&#34;翻译官&#34;，跟钱直接挂钩。
+支付单: 独立于订单 通道: 微信 / 支付宝 / 银联 对账: 每日 T&#43;1 ⚠️ PITFALL: 支付回调和订单状态更新必须解耦——网络抖动时回调可能重复、延迟、甚至丢失。幂等设计和状态机校验是命门。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-06-26 10:00:00 +0800 CST'>June 26, 2026</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to 电商核心业务模型图谱" href="/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">JavaScript Async Patterns
     </h2>
   </header>
   <div class="entry-content">
-    <p>From callbacks to Promises to async/await – a deep dive into asynchronous JavaScript patterns and how to avoid common pitfalls.
+    <p>从回调到 Promise，再到 async/await：异步之河的摆渡人
+我初识 JavaScript 时，它像一条湍急而混乱的河。那时我们用回调函数过河，层层嵌套，像在河心垒石。一个接一个的函数压下来，代码缩进越来越深，直到变成所谓的“回调地狱”——维护代码的人，像困在迷宫里的守夜人，再也找不到出口。
+后来，Promise 出现了。它像一座桥，横跨在异步的河流之上。 “.then()” 像桥上的灯，一步步照亮前行的路； “.catch()” 则是桥下的网，哪怕失足，也不会坠入深渊。我们终于可以把“成功”与“失败”清晰地分开，不再让错误在层层回调中悄然蒸发。
+可桥再稳，走的人多了，依旧会觉得疲惫。于是 ES2017 带来了&#34;async/await&#34;，像一艘平稳的渡轮。你站在甲板上，代码看起来像同步的那样优雅，却依旧拥有异步的力量。 “await” 是短暂的停顿，像呼吸之间的留白； “async” 则是航向，宣告这个函数终将驶向远方。
+但河流总有暗礁。忘记 “await”，就像跳上一艘无人掌舵的小船，不知何时就会撞上礁石；滥用&#34;try/catch&#34;，则可能把错误吞进漆黑的河水，再也浮不上来；而在循环里不加思索地使用 “await”，又会把本该并行的溪流，硬生生堵成一条窄渠。
+异步的进化，不只是语法的变迁，更是思维方式的成熟。从混乱到秩序，从绕行到直抵，我们学会了在不确定中寻找确定，在等待中保持清醒。
+JavaScript 的异步之旅，从未停止流动。而我们，也只是这条河上的摆渡人——愿每一次&#34;await&#34;，都值得被温柔地 “resolve”。
 </p>
   </div>
-  <footer class="entry-footer"><span title='2025-03-20 10:00:00 +0800 CST'>March 20, 2025</span>&nbsp;·&nbsp;<span>map[email:eli@example.com name:Eli He]</span></footer>
-  <a class="entry-link" aria-label="post link to JavaScript Async Patterns" href="/posts/js-async/"></a>
+  <footer class="entry-footer"><span title='2025-03-20 10:00:00 +0800 CST'>March 20, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to JavaScript Async Patterns" href="/posts/javascript-async-patterns/"></a>
 </article>
 
 <article class="post-entry tag-entry"> 
@@ -160,11 +190,22 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>Go modules are the standard dependency management system for Go. This guide covers creating a module, managing dependencies, and versioning.
+    <p>Understanding Go Modules
+我最初接触 Go 的时候，它像一座没有围墙的城。代码就那样散落在 “$GOPATH/src” 下面，像旧书店里堆得老高的纸卷——你知道它们有用，却总在找某本书时碰落一整摞。那时我们常说：“GOPATH 就是家。”可家的规矩太宽，宽到依赖飘在风里，今天能跑的程序，明天就可能因为一个第三方库的更新而崩塌。
+后来，Go Modules 来了。
+它不是一声惊雷，而像一场迟来的春雨。第一次在终端敲下 “go mod init”，屏幕上安静地吐出一行 “go.mod”，那一刻，我竟有些莫名的感动。这个文件不大，却像给漂泊的代码发了身份证：谁是你，你依赖谁，你要去往哪里的版本。不再盲从 “master” 分支的潮水，不再被不可控的更新淹没。 “v1.0.0”、 “v1.2.3”——语义化版本像灯塔，把黑夜里的船一盏盏引回港湾。
+我开始学着理解它，而不只是使用它。
+“go.sum” 不是累赘，是守护者。它默默记下每一个模块的哈希值，像守夜人核对每一个进出城门的旅人。你不常注意它，但它一直在那里，确保你拿到的，正是你以为的那个世界。
+“replace” 是我调试时的小秘密，本地替换掉远程包，像把远方的山搬进后院，细细端详。
+“exclude” 则是温柔的拒绝——有些版本，注定不该与你同行。
+最动人的是 “minimal version selection”。Go 没有选择“最新”，而是选择“足够”。它不相信永远向上，只相信可重复、可依赖。这像极了成年人的爱情：不追最热烈，只求最安稳。
+如今，我的项目整齐得像一座座小小的城邦。 “go.mod” 是宪法， “go.sum” 是历史， “vendor” 是粮仓。我再也不必在深夜因为一个未知的依赖错误而惊醒。代码终于可以安心地生长，像树一样，年轮清晰，根脉扎实。
+Understanding Go Modules，或许不只是理解一个工具。
+它让我明白：真正的自由，从来不是无拘无束，而是清楚地知道——边界在哪里，归宿在何方。
 </p>
   </div>
-  <footer class="entry-footer"><span title='2025-03-05 10:00:00 +0800 CST'>March 5, 2025</span>&nbsp;·&nbsp;<span>map[email:eli@example.com name:Eli He]</span></footer>
-  <a class="entry-link" aria-label="post link to Understanding Go Modules" href="/posts/go-modules/"></a>
+  <footer class="entry-footer"><span title='2025-03-05 10:00:00 +0800 CST'>March 5, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to Understanding Go Modules" href="/posts/understanding-go-modules/"></a>
 </article>
 
 <article class="post-entry tag-entry"> 
@@ -176,8 +217,8 @@
     <p>CSS Grid is a powerful layout system that makes responsive design much easier. Learn about grid templates, auto-fit, and responsive columns.
 </p>
   </div>
-  <footer class="entry-footer"><span title='2025-02-01 10:00:00 +0800 CST'>February 1, 2025</span>&nbsp;·&nbsp;<span>map[email:eli@example.com name:Eli He]</span></footer>
-  <a class="entry-link" aria-label="post link to CSS Grid Layout Guide" href="/posts/css-grid-guide/"></a>
+  <footer class="entry-footer"><span title='2025-02-01 10:00:00 +0800 CST'>February 1, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to CSS Grid Layout Guide" href="/posts/css-grid-layout-guide/"></a>
 </article>
 
 <article class="post-entry tag-entry"> 
@@ -189,13 +230,13 @@
     <p>Hugo is one of the fastest static site generators. In this post, we explore how to set up a new site, choose a theme, and start writing content.
 </p>
   </div>
-  <footer class="entry-footer"><span title='2025-01-15 10:00:00 +0800 CST'>January 15, 2025</span>&nbsp;·&nbsp;<span>map[email:eli@example.com name:Eli He]</span></footer>
-  <a class="entry-link" aria-label="post link to Getting Started with Hugo Static Sites" href="/posts/hugo-intro/"></a>
+  <footer class="entry-footer"><span title='2025-01-15 10:00:00 +0800 CST'>January 15, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to Getting Started with Hugo Static Sites" href="/posts/getting-started-with-hugo-static-sites/"></a>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2026 <a href="/">My Blog Site</a></span> · 
+        <span>© {year} Eli He</span> · 
 
     <span>
         Powered by

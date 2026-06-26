@@ -5,10 +5,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>Go | My Blog Site</title>
+<title>Go | Eli He&#39;s Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="A personal blog about technology and life">
-<meta name="author" content="map[email:eli@example.com name:Eli He]">
+<meta name="description" content="A personal blog about technology, programming, and life">
+<meta name="author" content="Eli He">
 <link rel="canonical" href="/tags/go/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.9e629b1e99691abf99756971d99b108dcf5c6bd20f24c704002ca05c23c3385b.css" integrity="" rel="preload stylesheet" as="style">
 <link rel="icon" href="/favicon.ico">
@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="/tags/go/index.xml" title="rss">
+<link rel="alternate" type="application/rss+xml" href="/tags/go/rss.xml" title="rss">
 <link rel="alternate" hreflang="en" href="/tags/go/">
 <noscript>
     <style>
@@ -72,21 +72,21 @@
     }
 
 </script><meta property="og:url" content="/tags/go/">
-  <meta property="og:site_name" content="My Blog Site">
+  <meta property="og:site_name" content="Eli He&#39;s Blog">
   <meta property="og:title" content="Go">
-  <meta property="og:description" content="A personal blog about technology and life">
+  <meta property="og:description" content="A personal blog about technology, programming, and life">
   <meta property="og:locale" content="en-us">
   <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Go">
-<meta name="twitter:description" content="A personal blog about technology and life">
+<meta name="twitter:description" content="A personal blog about technology, programming, and life">
 
 </head>
 <body class="list" id="top">
     <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="/" accesskey="h" title="My Blog Site (Alt + H)">My Blog Site</a>
+            <a href="/" accesskey="h" title="Eli He&#39;s Blog (Alt + H)">Eli He&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -135,7 +135,7 @@
     </nav>
 </header>
 <main class="main"> 
-<header class="page-header">
+<header class="page-header"><div class="breadcrumbs"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/tags/">Tags</a></div>
   <h1>
     Go
   </h1>
@@ -147,16 +147,27 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>Go modules are the standard dependency management system for Go. This guide covers creating a module, managing dependencies, and versioning.
+    <p>Understanding Go Modules
+我最初接触 Go 的时候，它像一座没有围墙的城。代码就那样散落在 “$GOPATH/src” 下面，像旧书店里堆得老高的纸卷——你知道它们有用，却总在找某本书时碰落一整摞。那时我们常说：“GOPATH 就是家。”可家的规矩太宽，宽到依赖飘在风里，今天能跑的程序，明天就可能因为一个第三方库的更新而崩塌。
+后来，Go Modules 来了。
+它不是一声惊雷，而像一场迟来的春雨。第一次在终端敲下 “go mod init”，屏幕上安静地吐出一行 “go.mod”，那一刻，我竟有些莫名的感动。这个文件不大，却像给漂泊的代码发了身份证：谁是你，你依赖谁，你要去往哪里的版本。不再盲从 “master” 分支的潮水，不再被不可控的更新淹没。 “v1.0.0”、 “v1.2.3”——语义化版本像灯塔，把黑夜里的船一盏盏引回港湾。
+我开始学着理解它，而不只是使用它。
+“go.sum” 不是累赘，是守护者。它默默记下每一个模块的哈希值，像守夜人核对每一个进出城门的旅人。你不常注意它，但它一直在那里，确保你拿到的，正是你以为的那个世界。
+“replace” 是我调试时的小秘密，本地替换掉远程包，像把远方的山搬进后院，细细端详。
+“exclude” 则是温柔的拒绝——有些版本，注定不该与你同行。
+最动人的是 “minimal version selection”。Go 没有选择“最新”，而是选择“足够”。它不相信永远向上，只相信可重复、可依赖。这像极了成年人的爱情：不追最热烈，只求最安稳。
+如今，我的项目整齐得像一座座小小的城邦。 “go.mod” 是宪法， “go.sum” 是历史， “vendor” 是粮仓。我再也不必在深夜因为一个未知的依赖错误而惊醒。代码终于可以安心地生长，像树一样，年轮清晰，根脉扎实。
+Understanding Go Modules，或许不只是理解一个工具。
+它让我明白：真正的自由，从来不是无拘无束，而是清楚地知道——边界在哪里，归宿在何方。
 </p>
   </div>
-  <footer class="entry-footer"><span title='2025-03-05 10:00:00 +0800 CST'>March 5, 2025</span>&nbsp;·&nbsp;<span>map[email:eli@example.com name:Eli He]</span></footer>
-  <a class="entry-link" aria-label="post link to Understanding Go Modules" href="/posts/go-modules/"></a>
+  <footer class="entry-footer"><span title='2025-03-05 10:00:00 +0800 CST'>March 5, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to Understanding Go Modules" href="/posts/understanding-go-modules/"></a>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2026 <a href="/">My Blog Site</a></span> · 
+        <span>© {year} Eli He</span> · 
 
     <span>
         Powered by

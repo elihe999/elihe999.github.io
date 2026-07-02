@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>电商核心业务模型图谱 | Eli He&#39;s Blog</title>
+<meta name="keywords" content="ecommerce, business-model, system-design">
+<meta name="description" content="电商不是&quot;做一个商城页面&quot;那么简单。它是用户、商品、订单、库存、支付、营销、物流七大实体的精密咬合。理解这七者如何串联，就理解了电商系统的骨架。建模的难点不是定义字段，而是定义清楚&quot;它是什么、不是什么&quot;。
+01 七大核心实体
+每个实体都不是孤立的数据表，它背后都有一套业务规则和&quot;坑&quot;。下面每个卡片都标注了建模时最容易翻车的地方。
+用户
+电商里所有行为的发起者，决定了&quot;谁在买、为什么买、还会不会买&quot;。
+
+id: user_id
+分层: 等级 / 会员 / 画像
+关联: 订单 / 收藏 / 地址
+
+
+⚠️ PITFALL: 用户、会员、账户是三个东西。会员是身份，账户是钱袋子，用户是登录身份。一个手机号背后可能挂多个会员身份（主账号&#43;子账号）。
+
+商品
+电商的&quot;货&quot;。表面上是个名字&#43;图片，实际上是个多层级复杂模型。
+
+SPU: iPhone 15 Pro
+SKU: 银色 256G
+类目: 三级分类树
+
+
+⚠️ PITFALL: SPU和SKU必须分开。一个SPU对应多个SKU（颜色×尺码×版本）。后期加&quot;套装版&quot;或&quot;定制款&quot;，整库都要重构——前期必须留扩展口。
+
+订单
+电商的&quot;交易凭证&quot;。表面是流程，实质是一个状态机。
+
+id: order_id
+结构: 主单 &#43; 子单 &#43; 订单项
+状态: 12&#43; 种
+
+
+⚠️ PITFALL: 状态机设计时，少写了&quot;已退款&quot;或&quot;部分退款&quot;分支，三个月后业务要做退款功能时整库重写。父子订单、合并支付、拆单发货也要早期想清楚。
+
+库存
+电商CTO的噩梦。表面是加减，实际是四种库存的精细运营。
+
+实物库存: 仓库里真实数量
+可销售: 上架 &#43; 未锁定
+预占/锁定: 下单但未支付
+
+
+⚠️ PITFALL: 秒杀时如果用单一库存字段，要么超卖要么少卖。必须区分&quot;预占库存&quot;和&quot;实际扣减&quot;两个时机，订单超时不付还要回滚。
+
+支付
+资金的入口。订单和资金流的&quot;翻译官&quot;，跟钱直接挂钩。
+
+支付单: 独立于订单
+通道: 微信 / 支付宝 / 银联
+对账: 每日 T&#43;1
+
+
+⚠️ PITFALL: 支付回调和订单状态更新必须解耦——网络抖动时回调可能重复、延迟、甚至丢失。幂等设计和状态机校验是命门。">
+<meta name="author" content="Eli He">
+<link rel="canonical" href="/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.1cdeae9ed1f8c7bc46a1477d35ba288522a5e44c11ae77e66136b36272dd2c6a.css" integrity="" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/">
+  <meta property="og:site_name" content="Eli He&#39;s Blog">
+  <meta property="og:title" content="电商核心业务模型图谱">
+  <meta property="og:description" content="电商不是&#34;做一个商城页面&#34;那么简单。它是用户、商品、订单、库存、支付、营销、物流七大实体的精密咬合。理解这七者如何串联，就理解了电商系统的骨架。建模的难点不是定义字段，而是定义清楚&#34;它是什么、不是什么&#34;。
+01 七大核心实体 每个实体都不是孤立的数据表，它背后都有一套业务规则和&#34;坑&#34;。下面每个卡片都标注了建模时最容易翻车的地方。
+用户 电商里所有行为的发起者，决定了&#34;谁在买、为什么买、还会不会买&#34;。
+id: user_id 分层: 等级 / 会员 / 画像 关联: 订单 / 收藏 / 地址 ⚠️ PITFALL: 用户、会员、账户是三个东西。会员是身份，账户是钱袋子，用户是登录身份。一个手机号背后可能挂多个会员身份（主账号&#43;子账号）。
+商品 电商的&#34;货&#34;。表面上是个名字&#43;图片，实际上是个多层级复杂模型。
+SPU: iPhone 15 Pro SKU: 银色 256G 类目: 三级分类树 ⚠️ PITFALL: SPU和SKU必须分开。一个SPU对应多个SKU（颜色×尺码×版本）。后期加&#34;套装版&#34;或&#34;定制款&#34;，整库都要重构——前期必须留扩展口。
+订单 电商的&#34;交易凭证&#34;。表面是流程，实质是一个状态机。
+id: order_id 结构: 主单 &#43; 子单 &#43; 订单项 状态: 12&#43; 种 ⚠️ PITFALL: 状态机设计时，少写了&#34;已退款&#34;或&#34;部分退款&#34;分支，三个月后业务要做退款功能时整库重写。父子订单、合并支付、拆单发货也要早期想清楚。
+库存 电商CTO的噩梦。表面是加减，实际是四种库存的精细运营。
+实物库存: 仓库里真实数量 可销售: 上架 &#43; 未锁定 预占/锁定: 下单但未支付 ⚠️ PITFALL: 秒杀时如果用单一库存字段，要么超卖要么少卖。必须区分&#34;预占库存&#34;和&#34;实际扣减&#34;两个时机，订单超时不付还要回滚。
+支付 资金的入口。订单和资金流的&#34;翻译官&#34;，跟钱直接挂钩。
+支付单: 独立于订单 通道: 微信 / 支付宝 / 银联 对账: 每日 T&#43;1 ⚠️ PITFALL: 支付回调和订单状态更新必须解耦——网络抖动时回调可能重复、延迟、甚至丢失。幂等设计和状态机校验是命门。">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-06-26T10:00:00+08:00">
+    <meta property="article:modified_time" content="2026-06-26T10:00:00+08:00">
+    <meta property="article:tag" content="Ecommerce">
+    <meta property="article:tag" content="Business-Model">
+    <meta property="article:tag" content="System-Design">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="电商核心业务模型图谱">
+<meta name="twitter:description" content="电商不是&quot;做一个商城页面&quot;那么简单。它是用户、商品、订单、库存、支付、营销、物流七大实体的精密咬合。理解这七者如何串联，就理解了电商系统的骨架。建模的难点不是定义字段，而是定义清楚&quot;它是什么、不是什么&quot;。
+01 七大核心实体
+每个实体都不是孤立的数据表，它背后都有一套业务规则和&quot;坑&quot;。下面每个卡片都标注了建模时最容易翻车的地方。
+用户
+电商里所有行为的发起者，决定了&quot;谁在买、为什么买、还会不会买&quot;。
+
+id: user_id
+分层: 等级 / 会员 / 画像
+关联: 订单 / 收藏 / 地址
+
+
+⚠️ PITFALL: 用户、会员、账户是三个东西。会员是身份，账户是钱袋子，用户是登录身份。一个手机号背后可能挂多个会员身份（主账号&#43;子账号）。
+
+商品
+电商的&quot;货&quot;。表面上是个名字&#43;图片，实际上是个多层级复杂模型。
+
+SPU: iPhone 15 Pro
+SKU: 银色 256G
+类目: 三级分类树
+
+
+⚠️ PITFALL: SPU和SKU必须分开。一个SPU对应多个SKU（颜色×尺码×版本）。后期加&quot;套装版&quot;或&quot;定制款&quot;，整库都要重构——前期必须留扩展口。
+
+订单
+电商的&quot;交易凭证&quot;。表面是流程，实质是一个状态机。
+
+id: order_id
+结构: 主单 &#43; 子单 &#43; 订单项
+状态: 12&#43; 种
+
+
+⚠️ PITFALL: 状态机设计时，少写了&quot;已退款&quot;或&quot;部分退款&quot;分支，三个月后业务要做退款功能时整库重写。父子订单、合并支付、拆单发货也要早期想清楚。
+
+库存
+电商CTO的噩梦。表面是加减，实际是四种库存的精细运营。
+
+实物库存: 仓库里真实数量
+可销售: 上架 &#43; 未锁定
+预占/锁定: 下单但未支付
+
+
+⚠️ PITFALL: 秒杀时如果用单一库存字段，要么超卖要么少卖。必须区分&quot;预占库存&quot;和&quot;实际扣减&quot;两个时机，订单超时不付还要回滚。
+
+支付
+资金的入口。订单和资金流的&quot;翻译官&quot;，跟钱直接挂钩。
+
+支付单: 独立于订单
+通道: 微信 / 支付宝 / 银联
+对账: 每日 T&#43;1
+
+
+⚠️ PITFALL: 支付回调和订单状态更新必须解耦——网络抖动时回调可能重复、延迟、甚至丢失。幂等设计和状态机校验是命门。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "/posts/"
+    }
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "电商核心业务模型图谱",
+      "item": "/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "电商核心业务模型图谱",
+  "name": "电商核心业务模型图谱",
+  "description": "电商不是\u0026quot;做一个商城页面\u0026quot;那么简单。它是用户、商品、订单、库存、支付、营销、物流七大实体的精密咬合。理解这七者如何串联，就理解了电商系统的骨架。建模的难点不是定义字段，而是定义清楚\u0026quot;它是什么、不是什么\u0026quot;。\n01 七大核心实体 每个实体都不是孤立的数据表，它背后都有一套业务规则和\u0026quot;坑\u0026quot;。下面每个卡片都标注了建模时最容易翻车的地方。\n用户 电商里所有行为的发起者，决定了\u0026quot;谁在买、为什么买、还会不会买\u0026quot;。\nid: user_id 分层: 等级 / 会员 / 画像 关联: 订单 / 收藏 / 地址 ⚠️ PITFALL: 用户、会员、账户是三个东西。会员是身份，账户是钱袋子，用户是登录身份。一个手机号背后可能挂多个会员身份（主账号+子账号）。\n商品 电商的\u0026quot;货\u0026quot;。表面上是个名字+图片，实际上是个多层级复杂模型。\nSPU: iPhone 15 Pro SKU: 银色 256G 类目: 三级分类树 ⚠️ PITFALL: SPU和SKU必须分开。一个SPU对应多个SKU（颜色×尺码×版本）。后期加\u0026quot;套装版\u0026quot;或\u0026quot;定制款\u0026quot;，整库都要重构——前期必须留扩展口。\n订单 电商的\u0026quot;交易凭证\u0026quot;。表面是流程，实质是一个状态机。\nid: order_id 结构: 主单 + 子单 + 订单项 状态: 12+ 种 ⚠️ PITFALL: 状态机设计时，少写了\u0026quot;已退款\u0026quot;或\u0026quot;部分退款\u0026quot;分支，三个月后业务要做退款功能时整库重写。父子订单、合并支付、拆单发货也要早期想清楚。\n库存 电商CTO的噩梦。表面是加减，实际是四种库存的精细运营。\n实物库存: 仓库里真实数量 可销售: 上架 + 未锁定 预占/锁定: 下单但未支付 ⚠️ PITFALL: 秒杀时如果用单一库存字段，要么超卖要么少卖。必须区分\u0026quot;预占库存\u0026quot;和\u0026quot;实际扣减\u0026quot;两个时机，订单超时不付还要回滚。\n支付 资金的入口。订单和资金流的\u0026quot;翻译官\u0026quot;，跟钱直接挂钩。\n支付单: 独立于订单 通道: 微信 / 支付宝 / 银联 对账: 每日 T+1 ⚠️ PITFALL: 支付回调和订单状态更新必须解耦——网络抖动时回调可能重复、延迟、甚至丢失。幂等设计和状态机校验是命门。\n",
+  "keywords": [
+    "ecommerce", "business-model", "system-design"
+  ],
+  "articleBody": "电商不是\"做一个商城页面\"那么简单。它是用户、商品、订单、库存、支付、营销、物流七大实体的精密咬合。理解这七者如何串联，就理解了电商系统的骨架。建模的难点不是定义字段，而是定义清楚\"它是什么、不是什么\"。\n01 七大核心实体 每个实体都不是孤立的数据表，它背后都有一套业务规则和\"坑\"。下面每个卡片都标注了建模时最容易翻车的地方。\n用户 电商里所有行为的发起者，决定了\"谁在买、为什么买、还会不会买\"。\nid: user_id 分层: 等级 / 会员 / 画像 关联: 订单 / 收藏 / 地址 ⚠️ PITFALL: 用户、会员、账户是三个东西。会员是身份，账户是钱袋子，用户是登录身份。一个手机号背后可能挂多个会员身份（主账号+子账号）。\n商品 电商的\"货\"。表面上是个名字+图片，实际上是个多层级复杂模型。\nSPU: iPhone 15 Pro SKU: 银色 256G 类目: 三级分类树 ⚠️ PITFALL: SPU和SKU必须分开。一个SPU对应多个SKU（颜色×尺码×版本）。后期加\"套装版\"或\"定制款\"，整库都要重构——前期必须留扩展口。\n订单 电商的\"交易凭证\"。表面是流程，实质是一个状态机。\nid: order_id 结构: 主单 + 子单 + 订单项 状态: 12+ 种 ⚠️ PITFALL: 状态机设计时，少写了\"已退款\"或\"部分退款\"分支，三个月后业务要做退款功能时整库重写。父子订单、合并支付、拆单发货也要早期想清楚。\n库存 电商CTO的噩梦。表面是加减，实际是四种库存的精细运营。\n实物库存: 仓库里真实数量 可销售: 上架 + 未锁定 预占/锁定: 下单但未支付 ⚠️ PITFALL: 秒杀时如果用单一库存字段，要么超卖要么少卖。必须区分\"预占库存\"和\"实际扣减\"两个时机，订单超时不付还要回滚。\n支付 资金的入口。订单和资金流的\"翻译官\"，跟钱直接挂钩。\n支付单: 独立于订单 通道: 微信 / 支付宝 / 银联 对账: 每日 T+1 ⚠️ PITFALL: 支付回调和订单状态更新必须解耦——网络抖动时回调可能重复、延迟、甚至丢失。幂等设计和状态机校验是命门。\n营销 规则的俄罗斯套娃。优惠券、满减、折扣、积分……叠加规则本身就是建模问题。\n优惠券: 满减 / 折扣 / 品类 活动: 限时 / 阶梯 / 拼团 互斥规则: 叠加 / 优先级 ⚠️ PITFALL: 营销规则叠加顺序不一致，前端显示价和用户实付价对不上，会爆发客诉。规则引擎必须有\"单一计算入口\"，禁止散落各处。\n物流 订单履约的最后一步。涉及仓库、承运商、轨迹、对账多个外部依赖。\n发货单: 独立实体 承运商: 顺丰 / 中通 / 自营 轨迹: 实时同步 ⚠️ PITFALL: 订单状态和物流状态不要耦合。一个订单可能分多个包裹，物流的\"已签收\"≠订单的\"已完成\"——还有可能退货。\n02 实体之间的关系 实体不是孤岛。订单是核心枢纽——它把用户、商品、库存、支付、营销、物流全部串联起来。看懂这张图，就看懂了电商系统的\"主血管\"。\ngraph TB User[用户] --\u003e|下单| Order[订单] Product[商品] --\u003e|包含| Order Promotion[营销] --\u003e|应用优惠| Order Order --\u003e|生成发货| Logistics[物流] Inventory[库存] --\u003e|预占/扣减| Order Order --\u003e|发起支付| Payment[支付] Inventory -.-\u003e|出库| Logistics style Order fill:#c97b3f,stroke:#c97b3f,color:#fff 03 一笔订单的生命周期 从用户点\"立即购买\"到商品签收，背后是 8+ 个系统的协同。注意每个步骤都有\"成功\"和\"失败\"两条路径，失败的处理往往比成功更重要。\nsequenceDiagram participant U as 用户 participant C as 购物车 participant O as 订单系统 participant I as 库存系统 participant P as 支付系统 participant S as 物流系统 U-\u003e\u003eC: 1. 加入购物车 C-\u003e\u003eI: 2. 检查可销售库存 I--\u003e\u003eC: 返回库存状态 U-\u003e\u003eO: 3. 提交订单 O-\u003e\u003eI: 4. 预占库存 (锁定) I--\u003e\u003eO: 预占成功 O-\u003e\u003eU: 5. 返回订单+支付链接 U-\u003e\u003eP: 6. 发起支付 P-\u003e\u003eO: 7. 回调通知 O-\u003e\u003eI: 8. 扣减库存 (确认) O-\u003e\u003eS: 9. 创建发货单 S-\u003e\u003eU: 10. 物流配送 U--\u003e\u003eS: 11. 签收 S-\u003e\u003eO: 12. 订单完成 Note over O,I: ⚠️ 预占超时 (15min)必须回滚库存 Note over P,O: ⚠️ 支付失败释放预占,关闭订单 04 订单状态机 订单不是\"已下单\"和\"已完成\"两个状态就够了。真实业务里至少有十几种状态，每一次状态转换都是一个\"业务事件\"。\n正向流程状态 PENDING - 待支付：订单创建，库存已预占，等待用户付款（通常15分钟内） PAID - 已支付：支付成功，库存正式扣减，生成发货单 SHIPPING - 已发货：仓库已出库，物流在途，可查询轨迹 RECEIVED - 已签收：用户确认收货或物流回签成功 COMPLETED - 已完成：交易关闭，进入售后窗口期（一般7-15天） 异常与售后状态 CANCELLED - 已取消：用户主动取消或支付超时，库存回滚 CLOSED - 已关闭：异常订单被人工或系统强制关闭 REFUNDING - 退款中：用户申请退款，等待审核和资金原路返回 REFUNDED - 已退款：资金已退回用户账户，库存可能回补 RETURNING - 退货中：用户寄回商品，等待仓库验收 PARTIAL - 部分售后：订单多件商品，部分退款/退货，其余正常 05 库存的四种状态 库存不是简单的\"加减法\"。一笔订单会改变库存的多种状态，理解库存在用户行为下的流转路径，是秒杀系统、超卖防控的理论基础。\nstateDiagram-v2 [*] --\u003e 实物库存 : 采购入库 实物库存 --\u003e 可销售 : 上架 可销售 --\u003e 预占库存 : 用户下单 预占库存 --\u003e 可销售 : 支付超时订单取消 预占库存 --\u003e 已扣减 : 支付成功 已扣减 --\u003e [*] : 订单完成 可销售 --\u003e 已扣减 : 直接购买（秒杀场景） 已扣减 --\u003e 可销售 : 退款/退货 note right of 预占库存 ⏰ 关键属性： • 锁定时间：通常 15 分钟 • 超时自动释放 • 多用户并发时 需要原子操作 end note 06 价格是怎么算出来的 电商价格不是\"标价\"。它是一连串规则叠加的结果。下面是一个真实场景：用户买一件 1000 元的商品，叠加了三层优惠，最后实付多少？\n步骤 规则 金额 ① 商品建议零售价 ¥1000.00 ② 限时 9 折 -¥100.00 ③ 满 500 减 80 -¥80.00 ④ 会员 95 折（在促销后价上） -¥41.00 ⑤ 1000 积分抵 ¥10 -¥10.00 实付 用户最终支付金额 ¥769.00 ⚠️ 注意：会员折扣是打在\"促销后\"还是\"促销前\"，结果差 ¥10。这就是为什么所有规则必须有单一计算入口，不允许前端、后端、营销系统各算各的。\n07 业务建模的核心能力 剥到底层，业务建模考验的不是技术，而是三种思维。AI 可以帮你画图、写代码、查资料，但抽象、边界、流程这三种能力只能自己练。\n01 抽象能力 从杂乱无章的现实业务里，提炼出关键实体和关系。比如把\"用户登录-选品-下单-收货\"这一串动作，抽象成\"用户-商品-订单-物流\"四个实体。\n02 边界感 知道模型现在该支持什么、将来要不要留扩展口子。比如订单状态，今天可能只要 5 种，要不要预留\"部分退款\"的状态位？\n03 流程思维 业务怎么\"流动\"，状态怎么\"变化\"，规则怎么\"触发\"。订单的 12 种状态不是并列的，是一个有方向的流程图，每个节点都有进入和离开条件。\n04 业务Sense 电商本质是「流量×转化×客单价×复购」。架构服务于商业目标，懂业务的架构师能在性能、成本、扩展性之间做出更合理的取舍。\n思考题 拿一张纸，限时 15 分钟。画不出来的地方，就是你接下来要重点补的方向。\n拼多多的\"百亿补贴\"商品，它的订单模型和普通订单有什么不一样？补贴成本谁承担？价格怎么算？\n京东自营 vs 第三方入驻，两者的库存模型和发货流程有什么本质区别？请画出两种模式的实体关系图。\n直播间秒杀，10 万人抢同一件商品，从下单到支付完成只有 3 分钟。库存系统要怎么设计才不会超卖？\n用户申请退款，订单状态、商品库存、支付金额、优惠券这四个东西，分别要发生什么变化？\n跨境电商，同一件商品发往不同国家，价格、库存、税费、清关——这些维度怎么组织成一个可扩展的模型？\n电商核心业务模型图谱 · 一份可视化教学材料\n",
+  "wordCount" : "404",
+  "inLanguage": "en",
+  "datePublished": "2026-06-26T10:00:00+08:00",
+  "dateModified": "2026-06-26T10:00:00+08:00",
+  "author":{
+    "@type": "Person",
+    "name": {"email":"eli@example.com","name":"Eli He"}
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Eli He's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+<body id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Eli He&#39;s Blog (Alt + H)">Eli He&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home">
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      电商核心业务模型图谱
+    </h1>
+    <div class="post-meta"><span title='2026-06-26 10:00:00 +0800 CST'>June 26, 2026</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Eli He</span>
+
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#01-%e4%b8%83%e5%a4%a7%e6%a0%b8%e5%bf%83%e5%ae%9e%e4%bd%93" aria-label="01 七大核心实体">01 七大核心实体</a><ul>
+                        
+                <li>
+                    <a href="#%e7%94%a8%e6%88%b7" aria-label="用户">用户</a></li>
+                <li>
+                    <a href="#%e5%95%86%e5%93%81" aria-label="商品">商品</a></li>
+                <li>
+                    <a href="#%e8%ae%a2%e5%8d%95" aria-label="订单">订单</a></li>
+                <li>
+                    <a href="#%e5%ba%93%e5%ad%98" aria-label="库存">库存</a></li>
+                <li>
+                    <a href="#%e6%94%af%e4%bb%98" aria-label="支付">支付</a></li>
+                <li>
+                    <a href="#%e8%90%a5%e9%94%80" aria-label="营销">营销</a></li>
+                <li>
+                    <a href="#%e7%89%a9%e6%b5%81" aria-label="物流">物流</a></li></ul>
+                </li>
+                <li>
+                    <a href="#02-%e5%ae%9e%e4%bd%93%e4%b9%8b%e9%97%b4%e7%9a%84%e5%85%b3%e7%b3%bb" aria-label="02 实体之间的关系">02 实体之间的关系</a></li>
+                <li>
+                    <a href="#03-%e4%b8%80%e7%ac%94%e8%ae%a2%e5%8d%95%e7%9a%84%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f" aria-label="03 一笔订单的生命周期">03 一笔订单的生命周期</a></li>
+                <li>
+                    <a href="#04-%e8%ae%a2%e5%8d%95%e7%8a%b6%e6%80%81%e6%9c%ba" aria-label="04 订单状态机">04 订单状态机</a><ul>
+                        
+                <li>
+                    <a href="#%e6%ad%a3%e5%90%91%e6%b5%81%e7%a8%8b%e7%8a%b6%e6%80%81" aria-label="正向流程状态">正向流程状态</a></li>
+                <li>
+                    <a href="#%e5%bc%82%e5%b8%b8%e4%b8%8e%e5%94%ae%e5%90%8e%e7%8a%b6%e6%80%81" aria-label="异常与售后状态">异常与售后状态</a></li></ul>
+                </li>
+                <li>
+                    <a href="#05-%e5%ba%93%e5%ad%98%e7%9a%84%e5%9b%9b%e7%a7%8d%e7%8a%b6%e6%80%81" aria-label="05 库存的四种状态">05 库存的四种状态</a></li>
+                <li>
+                    <a href="#06-%e4%bb%b7%e6%a0%bc%e6%98%af%e6%80%8e%e4%b9%88%e7%ae%97%e5%87%ba%e6%9d%a5%e7%9a%84" aria-label="06 价格是怎么算出来的">06 价格是怎么算出来的</a></li>
+                <li>
+                    <a href="#07-%e4%b8%9a%e5%8a%a1%e5%bb%ba%e6%a8%a1%e7%9a%84%e6%a0%b8%e5%bf%83%e8%83%bd%e5%8a%9b" aria-label="07 业务建模的核心能力">07 业务建模的核心能力</a><ul>
+                        
+                <li>
+                    <a href="#01-%e6%8a%bd%e8%b1%a1%e8%83%bd%e5%8a%9b" aria-label="01 抽象能力">01 抽象能力</a></li>
+                <li>
+                    <a href="#02-%e8%be%b9%e7%95%8c%e6%84%9f" aria-label="02 边界感">02 边界感</a></li>
+                <li>
+                    <a href="#03-%e6%b5%81%e7%a8%8b%e6%80%9d%e7%bb%b4" aria-label="03 流程思维">03 流程思维</a></li>
+                <li>
+                    <a href="#04-%e4%b8%9a%e5%8a%a1sense" aria-label="04 业务Sense">04 业务Sense</a></li></ul>
+                </li>
+                <li>
+                    <a href="#%e6%80%9d%e8%80%83%e9%a2%98" aria-label="思考题">思考题</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><p>电商不是&quot;做一个商城页面&quot;那么简单。它是<strong>用户、商品、订单、库存、支付、营销、物流</strong>七大实体的精密咬合。理解这七者如何串联，就理解了电商系统的骨架。建模的难点不是定义字段，而是定义清楚&quot;它是什么、不是什么&quot;。</p>
+<h2 id="01-七大核心实体">01 七大核心实体<a hidden class="anchor" aria-hidden="true" href="#01-七大核心实体">#</a></h2>
+<p>每个实体都不是孤立的数据表，它背后都有一套业务规则和&quot;坑&quot;。下面每个卡片都标注了建模时最容易翻车的地方。</p>
+<h3 id="用户">用户<a hidden class="anchor" aria-hidden="true" href="#用户">#</a></h3>
+<p>电商里所有行为的发起者，决定了&quot;谁在买、为什么买、还会不会买&quot;。</p>
+<ul>
+<li><strong>id</strong>: user_id</li>
+<li><strong>分层</strong>: 等级 / 会员 / 画像</li>
+<li><strong>关联</strong>: 订单 / 收藏 / 地址</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>PITFALL</strong>: 用户、会员、账户是三个东西。会员是身份，账户是钱袋子，用户是登录身份。一个手机号背后可能挂多个会员身份（主账号+子账号）。</p>
+</blockquote>
+<h3 id="商品">商品<a hidden class="anchor" aria-hidden="true" href="#商品">#</a></h3>
+<p>电商的&quot;货&quot;。表面上是个名字+图片，实际上是个多层级复杂模型。</p>
+<ul>
+<li><strong>SPU</strong>: iPhone 15 Pro</li>
+<li><strong>SKU</strong>: 银色 256G</li>
+<li><strong>类目</strong>: 三级分类树</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>PITFALL</strong>: SPU和SKU必须分开。一个SPU对应多个SKU（颜色×尺码×版本）。后期加&quot;套装版&quot;或&quot;定制款&quot;，整库都要重构——前期必须留扩展口。</p>
+</blockquote>
+<h3 id="订单">订单<a hidden class="anchor" aria-hidden="true" href="#订单">#</a></h3>
+<p>电商的&quot;交易凭证&quot;。表面是流程，实质是一个状态机。</p>
+<ul>
+<li><strong>id</strong>: order_id</li>
+<li><strong>结构</strong>: 主单 + 子单 + 订单项</li>
+<li><strong>状态</strong>: 12+ 种</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>PITFALL</strong>: 状态机设计时，少写了&quot;已退款&quot;或&quot;部分退款&quot;分支，三个月后业务要做退款功能时整库重写。父子订单、合并支付、拆单发货也要早期想清楚。</p>
+</blockquote>
+<h3 id="库存">库存<a hidden class="anchor" aria-hidden="true" href="#库存">#</a></h3>
+<p>电商CTO的噩梦。表面是加减，实际是四种库存的精细运营。</p>
+<ul>
+<li><strong>实物库存</strong>: 仓库里真实数量</li>
+<li><strong>可销售</strong>: 上架 + 未锁定</li>
+<li><strong>预占/锁定</strong>: 下单但未支付</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>PITFALL</strong>: 秒杀时如果用单一库存字段，要么超卖要么少卖。必须区分&quot;预占库存&quot;和&quot;实际扣减&quot;两个时机，订单超时不付还要回滚。</p>
+</blockquote>
+<h3 id="支付">支付<a hidden class="anchor" aria-hidden="true" href="#支付">#</a></h3>
+<p>资金的入口。订单和资金流的&quot;翻译官&quot;，跟钱直接挂钩。</p>
+<ul>
+<li><strong>支付单</strong>: 独立于订单</li>
+<li><strong>通道</strong>: 微信 / 支付宝 / 银联</li>
+<li><strong>对账</strong>: 每日 T+1</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>PITFALL</strong>: 支付回调和订单状态更新必须解耦——网络抖动时回调可能重复、延迟、甚至丢失。幂等设计和状态机校验是命门。</p>
+</blockquote>
+<h3 id="营销">营销<a hidden class="anchor" aria-hidden="true" href="#营销">#</a></h3>
+<p>规则的俄罗斯套娃。优惠券、满减、折扣、积分……叠加规则本身就是建模问题。</p>
+<ul>
+<li><strong>优惠券</strong>: 满减 / 折扣 / 品类</li>
+<li><strong>活动</strong>: 限时 / 阶梯 / 拼团</li>
+<li><strong>互斥规则</strong>: 叠加 / 优先级</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>PITFALL</strong>: 营销规则叠加顺序不一致，前端显示价和用户实付价对不上，会爆发客诉。规则引擎必须有&quot;单一计算入口&quot;，禁止散落各处。</p>
+</blockquote>
+<h3 id="物流">物流<a hidden class="anchor" aria-hidden="true" href="#物流">#</a></h3>
+<p>订单履约的最后一步。涉及仓库、承运商、轨迹、对账多个外部依赖。</p>
+<ul>
+<li><strong>发货单</strong>: 独立实体</li>
+<li><strong>承运商</strong>: 顺丰 / 中通 / 自营</li>
+<li><strong>轨迹</strong>: 实时同步</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>PITFALL</strong>: 订单状态和物流状态不要耦合。一个订单可能分多个包裹，物流的&quot;已签收&quot;≠订单的&quot;已完成&quot;——还有可能退货。</p>
+</blockquote>
+<h2 id="02-实体之间的关系">02 实体之间的关系<a hidden class="anchor" aria-hidden="true" href="#02-实体之间的关系">#</a></h2>
+<p>实体不是孤岛。订单是核心枢纽——它把用户、商品、库存、支付、营销、物流全部串联起来。看懂这张图，就看懂了电商系统的&quot;主血管&quot;。</p>
+<pre class="mermaid">graph TB
+    User[用户] -->|下单| Order[订单]
+    Product[商品] -->|包含| Order
+    Promotion[营销] -->|应用优惠| Order
+    Order -->|生成发货| Logistics[物流]
+    Inventory[库存] -->|预占/扣减| Order
+    Order -->|发起支付| Payment[支付]
+    Inventory -.->|出库| Logistics
+    
+    style Order fill:#c97b3f,stroke:#c97b3f,color:#fff
+</pre>
+<h2 id="03-一笔订单的生命周期">03 一笔订单的生命周期<a hidden class="anchor" aria-hidden="true" href="#03-一笔订单的生命周期">#</a></h2>
+<p>从用户点&quot;立即购买&quot;到商品签收，背后是 8+ 个系统的协同。注意每个步骤都有&quot;成功&quot;和&quot;失败&quot;两条路径，<strong>失败的处理往往比成功更重要</strong>。</p>
+<pre class="mermaid">sequenceDiagram
+    participant U as 用户
+    participant C as 购物车
+    participant O as 订单系统
+    participant I as 库存系统
+    participant P as 支付系统
+    participant S as 物流系统
+    U->>C: 1. 加入购物车
+    C->>I: 2. 检查可销售库存
+    I-->>C: 返回库存状态
+    U->>O: 3. 提交订单
+    O->>I: 4. 预占库存 (锁定)
+    I-->>O: 预占成功
+    O->>U: 5. 返回订单+支付链接
+    U->>P: 6. 发起支付
+    P->>O: 7. 回调通知
+    O->>I: 8. 扣减库存 (确认)
+    O->>S: 9. 创建发货单
+    S->>U: 10. 物流配送
+    U-->>S: 11. 签收
+    S->>O: 12. 订单完成
+    Note over O,I: ⚠️ 预占超时 (15min)<br/>必须回滚库存
+    Note over P,O: ⚠️ 支付失败<br/>释放预占,关闭订单
+</pre>
+<h2 id="04-订单状态机">04 订单状态机<a hidden class="anchor" aria-hidden="true" href="#04-订单状态机">#</a></h2>
+<p>订单不是&quot;已下单&quot;和&quot;已完成&quot;两个状态就够了。真实业务里至少有十几种状态，每一次状态转换都是一个&quot;业务事件&quot;。</p>
+<h3 id="正向流程状态">正向流程状态<a hidden class="anchor" aria-hidden="true" href="#正向流程状态">#</a></h3>
+<ul>
+<li><strong>PENDING</strong> - 待支付：订单创建，库存已预占，等待用户付款（通常15分钟内）</li>
+<li><strong>PAID</strong> - 已支付：支付成功，库存正式扣减，生成发货单</li>
+<li><strong>SHIPPING</strong> - 已发货：仓库已出库，物流在途，可查询轨迹</li>
+<li><strong>RECEIVED</strong> - 已签收：用户确认收货或物流回签成功</li>
+<li><strong>COMPLETED</strong> - 已完成：交易关闭，进入售后窗口期（一般7-15天）</li>
+</ul>
+<h3 id="异常与售后状态">异常与售后状态<a hidden class="anchor" aria-hidden="true" href="#异常与售后状态">#</a></h3>
+<ul>
+<li><strong>CANCELLED</strong> - 已取消：用户主动取消或支付超时，库存回滚</li>
+<li><strong>CLOSED</strong> - 已关闭：异常订单被人工或系统强制关闭</li>
+<li><strong>REFUNDING</strong> - 退款中：用户申请退款，等待审核和资金原路返回</li>
+<li><strong>REFUNDED</strong> - 已退款：资金已退回用户账户，库存可能回补</li>
+<li><strong>RETURNING</strong> - 退货中：用户寄回商品，等待仓库验收</li>
+<li><strong>PARTIAL</strong> - 部分售后：订单多件商品，部分退款/退货，其余正常</li>
+</ul>
+<h2 id="05-库存的四种状态">05 库存的四种状态<a hidden class="anchor" aria-hidden="true" href="#05-库存的四种状态">#</a></h2>
+<p>库存不是简单的&quot;加减法&quot;。一笔订单会改变库存的多种状态，<strong>理解库存在用户行为下的流转路径，是秒杀系统、超卖防控的理论基础</strong>。</p>
+<pre class="mermaid">stateDiagram-v2
+    [*] --> 实物库存 : 采购入库
+    实物库存 --> 可销售 : 上架
+    可销售 --> 预占库存 : 用户下单
+    预占库存 --> 可销售 : 支付超时<br/>订单取消
+    预占库存 --> 已扣减 : 支付成功
+    已扣减 --> [*] : 订单完成
+    可销售 --> 已扣减 : 直接购买<br/>（秒杀场景）
+    已扣减 --> 可销售 : 退款/退货
+    note right of 预占库存
+      ⏰ 关键属性：
+      • 锁定时间：通常 15 分钟
+      • 超时自动释放
+      • 多用户并发时
+        需要原子操作
+    end note
+</pre>
+<h2 id="06-价格是怎么算出来的">06 价格是怎么算出来的<a hidden class="anchor" aria-hidden="true" href="#06-价格是怎么算出来的">#</a></h2>
+<p>电商价格不是&quot;标价&quot;。它是一连串规则叠加的结果。下面是一个真实场景：用户买一件 1000 元的商品，叠加了三层优惠，最后实付多少？</p>
+<table>
+  <thead>
+      <tr>
+          <th>步骤</th>
+          <th>规则</th>
+          <th>金额</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>①</td>
+          <td>商品建议零售价</td>
+          <td>¥1000.00</td>
+      </tr>
+      <tr>
+          <td>②</td>
+          <td>限时 9 折</td>
+          <td>-¥100.00</td>
+      </tr>
+      <tr>
+          <td>③</td>
+          <td>满 500 减 80</td>
+          <td>-¥80.00</td>
+      </tr>
+      <tr>
+          <td>④</td>
+          <td>会员 95 折（在促销后价上）</td>
+          <td>-¥41.00</td>
+      </tr>
+      <tr>
+          <td>⑤</td>
+          <td>1000 积分抵 ¥10</td>
+          <td>-¥10.00</td>
+      </tr>
+      <tr>
+          <td><strong>实付</strong></td>
+          <td><strong>用户最终支付金额</strong></td>
+          <td><strong>¥769.00</strong></td>
+      </tr>
+  </tbody>
+</table>
+<blockquote>
+<p>⚠️ 注意：会员折扣是打在&quot;促销后&quot;还是&quot;促销前&quot;，结果差 ¥10。这就是为什么所有规则必须有<strong>单一计算入口</strong>，不允许前端、后端、营销系统各算各的。</p>
+</blockquote>
+<h2 id="07-业务建模的核心能力">07 业务建模的核心能力<a hidden class="anchor" aria-hidden="true" href="#07-业务建模的核心能力">#</a></h2>
+<p>剥到底层，业务建模考验的不是技术，而是三种思维。AI 可以帮你画图、写代码、查资料，但<strong>抽象、边界、流程这三种能力只能自己练</strong>。</p>
+<h3 id="01-抽象能力">01 抽象能力<a hidden class="anchor" aria-hidden="true" href="#01-抽象能力">#</a></h3>
+<p>从杂乱无章的现实业务里，提炼出关键实体和关系。比如把&quot;用户登录-选品-下单-收货&quot;这一串动作，抽象成&quot;用户-商品-订单-物流&quot;四个实体。</p>
+<h3 id="02-边界感">02 边界感<a hidden class="anchor" aria-hidden="true" href="#02-边界感">#</a></h3>
+<p>知道模型<strong>现在</strong>该支持什么、<strong>将来</strong>要不要留扩展口子。比如订单状态，今天可能只要 5 种，要不要预留&quot;部分退款&quot;的状态位？</p>
+<h3 id="03-流程思维">03 流程思维<a hidden class="anchor" aria-hidden="true" href="#03-流程思维">#</a></h3>
+<p>业务怎么&quot;流动&quot;，状态怎么&quot;变化&quot;，规则怎么&quot;触发&quot;。订单的 12 种状态不是并列的，是一个有方向的流程图，每个节点都有进入和离开条件。</p>
+<h3 id="04-业务sense">04 业务Sense<a hidden class="anchor" aria-hidden="true" href="#04-业务sense">#</a></h3>
+<p>电商本质是「流量×转化×客单价×复购」。架构服务于商业目标，懂业务的架构师能在性能、成本、扩展性之间做出更合理的取舍。</p>
+<h2 id="思考题">思考题<a hidden class="anchor" aria-hidden="true" href="#思考题">#</a></h2>
+<p>拿一张纸，限时 15 分钟。画不出来的地方，就是你接下来要重点补的方向。</p>
+<ol>
+<li>
+<p><strong>拼多多的&quot;百亿补贴&quot;商品</strong>，它的订单模型和普通订单有什么不一样？补贴成本谁承担？价格怎么算？</p>
+</li>
+<li>
+<p><strong>京东自营 vs 第三方入驻</strong>，两者的库存模型和发货流程有什么本质区别？请画出两种模式的实体关系图。</p>
+</li>
+<li>
+<p><strong>直播间秒杀</strong>，10 万人抢同一件商品，从下单到支付完成只有 3 分钟。库存系统要怎么设计才不会超卖？</p>
+</li>
+<li>
+<p><strong>用户申请退款</strong>，订单状态、商品库存、支付金额、优惠券这四个东西，分别要发生什么变化？</p>
+</li>
+<li>
+<p><strong>跨境电商</strong>，同一件商品发往不同国家，价格、库存、税费、清关——这些维度怎么组织成一个可扩展的模型？</p>
+</li>
+</ol>
+<hr>
+<p>电商核心业务模型图谱 · 一份可视化教学材料</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="/tags/ecommerce/">Ecommerce</a></li>
+      <li><a href="/tags/business-model/">Business-Model</a></li>
+      <li><a href="/tags/system-design/">System-Design</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="/posts/%E4%B8%8E%E7%A5%9E%E5%AF%B9%E8%AF%9D%E7%9A%84%E6%97%B6%E4%BB%A3%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%B1%E8%AF%AD/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>与神对话的时代，我选择失语</span>
+  </a>
+  <a class="next" href="/posts/javascript-async-patterns/">
+    <span class="title">Next »</span>
+    <br>
+    <span>JavaScript Async Patterns</span>
+  </a>
+</nav>
+
+
+<ul class="share-buttons">
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 电商核心业务模型图谱 on x"
+            href="https://x.com/intent/tweet/?text=%e7%94%b5%e5%95%86%e6%a0%b8%e5%bf%83%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9e%8b%e5%9b%be%e8%b0%b1&amp;url=%2fposts%2f%25E7%2594%25B5%25E5%2595%2586%25E6%25A0%25B8%25E5%25BF%2583%25E4%25B8%259A%25E5%258A%25A1%25E6%25A8%25A1%25E5%259E%258B%25E5%259B%25BE%25E8%25B0%25B1%2f&amp;hashtags=ecommerce%2cbusiness-model%2csystem-design">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 电商核心业务模型图谱 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fposts%2f%25E7%2594%25B5%25E5%2595%2586%25E6%25A0%25B8%25E5%25BF%2583%25E4%25B8%259A%25E5%258A%25A1%25E6%25A8%25A1%25E5%259E%258B%25E5%259B%25BE%25E8%25B0%25B1%2f&amp;title=%e7%94%b5%e5%95%86%e6%a0%b8%e5%bf%83%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9e%8b%e5%9b%be%e8%b0%b1&amp;summary=%e7%94%b5%e5%95%86%e6%a0%b8%e5%bf%83%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9e%8b%e5%9b%be%e8%b0%b1&amp;source=%2fposts%2f%25E7%2594%25B5%25E5%2595%2586%25E6%25A0%25B8%25E5%25BF%2583%25E4%25B8%259A%25E5%258A%25A1%25E6%25A8%25A1%25E5%259E%258B%25E5%259B%25BE%25E8%25B0%25B1%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 电商核心业务模型图谱 on reddit"
+            href="https://reddit.com/submit?url=%2fposts%2f%25E7%2594%25B5%25E5%2595%2586%25E6%25A0%25B8%25E5%25BF%2583%25E4%25B8%259A%25E5%258A%25A1%25E6%25A8%25A1%25E5%259E%258B%25E5%259B%25BE%25E8%25B0%25B1%2f&title=%e7%94%b5%e5%95%86%e6%a0%b8%e5%bf%83%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9e%8b%e5%9b%be%e8%b0%b1">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 电商核心业务模型图谱 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=%2fposts%2f%25E7%2594%25B5%25E5%2595%2586%25E6%25A0%25B8%25E5%25BF%2583%25E4%25B8%259A%25E5%258A%25A1%25E6%25A8%25A1%25E5%259E%258B%25E5%259B%25BE%25E8%25B0%25B1%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 电商核心业务模型图谱 on whatsapp"
+            href="https://api.whatsapp.com/send?text=%e7%94%b5%e5%95%86%e6%a0%b8%e5%bf%83%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9e%8b%e5%9b%be%e8%b0%b1%20-%20%2fposts%2f%25E7%2594%25B5%25E5%2595%2586%25E6%25A0%25B8%25E5%25BF%2583%25E4%25B8%259A%25E5%258A%25A1%25E6%25A8%25A1%25E5%259E%258B%25E5%259B%25BE%25E8%25B0%25B1%2f">
+            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 电商核心业务模型图谱 on telegram"
+            href="https://telegram.me/share/url?text=%e7%94%b5%e5%95%86%e6%a0%b8%e5%bf%83%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9e%8b%e5%9b%be%e8%b0%b1&amp;url=%2fposts%2f%25E7%2594%25B5%25E5%2595%2586%25E6%25A0%25B8%25E5%25BF%2583%25E4%25B8%259A%25E5%258A%25A1%25E6%25A8%25A1%25E5%259E%258B%25E5%259B%25BE%25E8%25B0%25B1%2f">
+            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
+                <path
+                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+            </svg>
+        </a>
+    </li>
+    <li>
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 电商核心业务模型图谱 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=%e7%94%b5%e5%95%86%e6%a0%b8%e5%bf%83%e4%b8%9a%e5%8a%a1%e6%a8%a1%e5%9e%8b%e5%9b%be%e8%b0%b1&u=%2fposts%2f%25E7%2594%25B5%25E5%2595%2586%25E6%25A0%25B8%25E5%25BF%2583%25E4%25B8%259A%25E5%258A%25A1%25E6%25A8%25A1%25E5%259E%258B%25E5%259B%25BE%25E8%25B0%25B1%2f">
+            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
+                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
+                <path
+                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
+            </svg>
+        </a>
+    </li>
+</ul>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>© 2026 Eli He</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    themeVariables: {
+      primaryColor: '#faf2e8',
+      primaryTextColor: '#14171e',
+      primaryBorderColor: '#c97b3f',
+      lineColor: '#c97b3f',
+      secondaryColor: '#f7f5f0',
+      tertiaryColor: '#ffffff',
+      fontFamily: 'Outfit, "PingFang SC", sans-serif',
+      fontSize: '13px',
+      noteBkgColor: 'rgba(201, 123, 63, 0.08)',
+      noteTextColor: '#3a4256',
+      noteBorderColor: '#c97b3f',
+      actorBkg: '#ffffff',
+      actorBorder: '#c97b3f',
+      actorTextColor: '#14171e',
+      actorLineColor: '#c97b3f',
+      signalColor: '#14171e',
+      signalTextColor: '#14171e',
+      labelBoxBkgColor: '#ffffff',
+      labelBoxBorderColor: '#c97b3f',
+      labelTextColor: '#14171e',
+      loopTextColor: '#b06367',
+      activationBorderColor: '#c97b3f',
+      activationBkgColor: 'rgba(201, 123, 63, 0.1)'
+    },
+    flowchart: { curve: 'basis', padding: 12 },
+    sequence: {
+      diagramMarginX: 30,
+      diagramMarginY: 20,
+      actorMargin: 60,
+      width: 140,
+      height: 50,
+      boxMargin: 12,
+      boxTextMargin: 6,
+      noteMargin: 12
+    },
+    stateDiagram: { padding: 12 }
+  });
+</script></body>
+
+</html>

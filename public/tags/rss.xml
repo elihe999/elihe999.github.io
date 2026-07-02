@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Tags on Eli He&#39;s Blog</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Eli He&#39;s Blog</description>
+    <generator>Hugo -- 0.158.0</generator>
+    <language>en-us</language>
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <copyright>2026 Eli He</copyright>
+    <lastBuildDate>Thu, 02 Jul 2026 15:00:00 +0800</lastBuildDate>
+    <atom:link href="/tags/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ai</title>
+      <link>/tags/ai/</link>
+      <pubDate>Thu, 02 Jul 2026 15:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Programming</title>
+      <link>/tags/programming/</link>
+      <pubDate>Thu, 02 Jul 2026 15:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reflection</title>
+      <link>/tags/reflection/</link>
+      <pubDate>Thu, 02 Jul 2026 15:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/reflection/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Business-Model</title>
+      <link>/tags/business-model/</link>
+      <pubDate>Fri, 26 Jun 2026 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/business-model/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ecommerce</title>
+      <link>/tags/ecommerce/</link>
+      <pubDate>Fri, 26 Jun 2026 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/ecommerce/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>System-Design</title>
+      <link>/tags/system-design/</link>
+      <pubDate>Fri, 26 Jun 2026 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/system-design/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Javascript</title>
+      <link>/tags/javascript/</link>
+      <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/javascript/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Go</title>
+      <link>/tags/go/</link>
+      <pubDate>Wed, 05 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/go/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Css</title>
+      <link>/tags/css/</link>
+      <pubDate>Sat, 01 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/css/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tutorial</title>
+      <link>/tags/tutorial/</link>
+      <pubDate>Sat, 01 Feb 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hugo</title>
+      <link>/tags/hugo/</link>
+      <pubDate>Wed, 15 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/hugo/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Blog</title>
+      <link>/tags/blog/</link>
+      <pubDate>Wed, 01 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/blog/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Welcome</title>
+      <link>/tags/welcome/</link>
+      <pubDate>Wed, 01 Jan 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/welcome/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Japan</title>
+      <link>/tags/japan/</link>
+      <pubDate>Tue, 20 Feb 2024 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/japan/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Travel</title>
+      <link>/tags/travel/</link>
+      <pubDate>Tue, 20 Feb 2024 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/travel/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

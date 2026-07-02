@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto" data-theme="auto">
+
+<head>
+	<meta name="generator" content="Hugo 0.158.0"><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Eli He&#39;s Blog</title>
+<meta name="keywords" content="blog, technology, programming, life">
+<meta name="description" content="A personal blog about technology, programming, and life">
+<meta name="author" content="Eli He">
+<link rel="canonical" href="/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.1cdeae9ed1f8c7bc46a1477d35ba288522a5e44c11ae77e66136b36272dd2c6a.css" integrity="" rel="preload stylesheet" as="style">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="rss">
+<link rel="alternate" hreflang="en" href="/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+                color-scheme: dark;
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .toc {
+                background: var(--entry);
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            .list::-webkit-scrollbar-thumb {
+                border-color: var(--code-bg);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else if (localStorage.getItem("pref-theme") === "light") {
+       document.querySelector("html").dataset.theme = 'light';
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.querySelector("html").dataset.theme = 'dark';
+    } else {
+        document.querySelector("html").dataset.theme = 'light';
+    }
+
+</script><meta property="og:url" content="/">
+  <meta property="og:site_name" content="Eli He&#39;s Blog">
+  <meta property="og:title" content="Eli He&#39;s Blog">
+  <meta property="og:description" content="A personal blog about technology, programming, and life">
+  <meta property="og:locale" content="en-us">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Eli He&#39;s Blog">
+<meta name="twitter:description" content="A personal blog about technology, programming, and life">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Eli He's Blog",
+  "url": "/",
+  "description": "A personal blog about technology, programming, and life",
+  "logo": "/favicon.ico",
+  "sameAs": [
+      "https://github.com/elihe999"
+  ]
+}
+</script>
+</head>
+<body class="list" id="top">
+    <header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="/" accesskey="h" title="Eli He&#39;s Blog (Alt + H)">Eli He&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="/" title="Home">
+                    <span class="active">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="/posts/" title="Posts">
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="/tags/" title="Tags">
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li>
+                <a href="/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<article class="first-entry home-info">
+    <header class="entry-header">
+        <h1>Hi there 👋</h1>
+    </header>
+    <div class="entry-content">
+        Welcome to my blog. I write about technology, programming, and life.
+    </div>
+    <footer class="entry-footer">
+        <div class="social-icons" >
+    <a href="https://github.com/elihe999" target="_blank" rel="noopener noreferrer me"
+        title="Github">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+    </path>
+</svg>
+    </a>
+</div>
+
+    </footer>
+</article>
+
+<article class="post-entry pinned"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Welcome to My Blog
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>This is my first blog post. More content coming soon!
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-01-01 10:00:00 +0800 CST'>January 1, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to Welcome to My Blog" href="/posts/welcome-to-my-blog/"></a>
+</article>
+
+<article class="post-entry pinned"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">My Travel Journal: Tokyo Trip
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>东京奇妙日：在传统与现代之间穿行
+清晨五点半，浅草寺的钟声还未敲响，我已经站在雷门前的石板路上。晨光像薄薄的金箔，轻轻贴在仲见世商店街的屋檐上。此时的东京不属于游客，而属于那些刚结束夜班、骑着自行车穿过巷口的普通人。我买了一只热腾腾的鲷鱼烧，糖馅烫嘴，却让人瞬间清醒——这是旅程的第一口温度，也是这座城市给我的第一个拥抱。
+随后，我钻进日比谷线的车厢。银座的地下并不喧嚣，只有皮鞋敲击地面的声音像鼓点，催促着某种看不见的秩序。但只消拐进一条小巷，世界立刻换了底色：筑地市场的余韵仍在，几家不起眼的寿司店门口挂着“本日休业”的手写木牌，隔壁却传来玉子烧在铁板上滋啦作响的声音。我走进一家只有六张吧台的小店，老板一言不发，却用海苔包裹住刚出锅的蛋卷递给我。那一刻我忽然明白：东京的高级，从不写在招牌上，而藏在“不必多言”的细节里。
+午后，我登上六本木之丘。从观景台俯瞰，整座城市像一块巨大的集成电路板，楼群是元件，道路是走线，车流是电流。远处，东京塔在阳光下泛着暖红，晴空塔则冷静地刺向云层。一边是昭和时代的浪漫，一边是令和的锋利，它们互不干扰，却又在同一幅天际线下共生。这种新旧并置的从容，大概就是东京最迷人的地方——它从不急着否定过去，也不畏惧奔向未来。
+黄昏时分，我迷失在下北泽的唱片行与古着店之间。这里没有银座的光鲜，却有无数年轻人背着吉他、抱着黑胶，眼神里有种不肯被规训的光。我在一家咖啡馆坐下，窗外电车驶过，窗帘轻轻扬起。咖啡是手冲的，酸质明亮得像少年心事。邻桌的老人正用老式胶片机拍照，咔嚓一声，仿佛把时间也一并定格。
+夜深，我走在隅田川畔。对岸的灯光倒映在水面，碎成一片流动的银河。河风微凉，却吹不散这座城市的体温。我想起这一天的种种：寺庙的沉香、地铁的人潮、寿司的鲜甜、楼顶的风、陌生人的微笑。东京从不是单一的表情，它是一首复调的歌——传统是它的低音，现代是它的高音，而生活，是其中永不间断的节拍。
+旅程终会结束，但有些东西留了下来：一种相信秩序与自由可以共存的信念，一种在喧嚣中依然寻找安静的能力。东京没有教会我如何逃离日常，却悄悄告诉我——只要脚步足够真诚，每一天都可以是一场小型的奇迹。
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-02-20 10:00:00 +0800 CST'>February 20, 2024</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to My Travel Journal: Tokyo Trip" href="/posts/my-travel-journal-tokyo-trip/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">与神对话的时代，我选择失语
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>我已经记不清，上一次为了一个指针越界而彻夜未眠，是在哪一年的雨季。
+那时候的代码是有脾气的。每一行代码都像是精心修剪的盆景，每一个 Segmentation Fault 都是一场小型的地震。我会盯着屏幕，像解读罗塞塔石碑一样去揣摩编译器的心思，手指在机械键盘上敲击出某种近乎仪式的节奏。那时的痛苦很具体，快乐也很具体——当程序终于跑通，绿灯亮起的那一刻，那种创造者的孤傲，足以支撑我度过整个潮湿的夏天。
+现在不一样了。
+现在我只需要动动嘴。我说，“帮我写一个分布式锁，要考虑红锁算法和时钟跳跃的问题。” 几乎是瞬间，整齐划一、注释详尽、甚至附带单元测试用例的代码块就流淌了出来。它太完美了，完美得像是从教科书里撕下来的范本，没有一丝烟火气，也没有一丝属于人类的笨拙。
+AI 实在太好用了。好用到让人感到一种彻骨的寒意。
+我就像一个拥有了阿拉丁神灯的人，不用再挥汗如雨地挖掘宝藏，只需要擦拭神灯，看着愿望自动实现。软件开发的逻辑被彻底颠覆了：从&#34;构建&#34;变成了&#34;描述&#34;，从&#34;工匠&#34;变成了&#34;监工&#34;。
+但我失去了什么？
+我失去了那种在迷雾中摸索，最后亲手触碰到真理边界的战栗。那些曾经让我抓耳挠腮的算法细节，如今只是黑盒里吐出的标准答案。我的手指不再因为思考而颤抖，它们只是负责复制和粘贴。我的脑子不再因为优化而沸腾，它只是负责判断这段代码&#34;看起来对不对&#34;。
+我开始怀念那些&#34;无用&#34;的时刻。
+在这个效率至上的时代，我们消灭了 Bug，也顺带消灭了程序员这个职业里最珍贵的&#34;手感&#34;。我们不再需要理解底层逻辑的泥泞，我们只需要结果。这不仅仅是工具的革新，这是人类在技术面前的一次集体退位。
+今晚，窗外下着和那年一样的雨。我看着屏幕上由 AI 生成的、优雅得令人绝望的代码，突然感到一种前所未有的空虚。
+我已经很久没有亲自动手写代码了。
+我也已经很久，没有真正拥有过那段代码了。
+在这个与神对话的时代，我选择了沉默，也选择了失语。
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-07-02 15:00:00 +0800 CST'>July 2, 2026</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to 与神对话的时代，我选择失语" href="/posts/%E4%B8%8E%E7%A5%9E%E5%AF%B9%E8%AF%9D%E7%9A%84%E6%97%B6%E4%BB%A3%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%B1%E8%AF%AD/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">电商核心业务模型图谱
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>电商不是&#34;做一个商城页面&#34;那么简单。它是用户、商品、订单、库存、支付、营销、物流七大实体的精密咬合。理解这七者如何串联，就理解了电商系统的骨架。建模的难点不是定义字段，而是定义清楚&#34;它是什么、不是什么&#34;。
+01 七大核心实体 每个实体都不是孤立的数据表，它背后都有一套业务规则和&#34;坑&#34;。下面每个卡片都标注了建模时最容易翻车的地方。
+用户 电商里所有行为的发起者，决定了&#34;谁在买、为什么买、还会不会买&#34;。
+id: user_id 分层: 等级 / 会员 / 画像 关联: 订单 / 收藏 / 地址 ⚠️ PITFALL: 用户、会员、账户是三个东西。会员是身份，账户是钱袋子，用户是登录身份。一个手机号背后可能挂多个会员身份（主账号&#43;子账号）。
+商品 电商的&#34;货&#34;。表面上是个名字&#43;图片，实际上是个多层级复杂模型。
+SPU: iPhone 15 Pro SKU: 银色 256G 类目: 三级分类树 ⚠️ PITFALL: SPU和SKU必须分开。一个SPU对应多个SKU（颜色×尺码×版本）。后期加&#34;套装版&#34;或&#34;定制款&#34;，整库都要重构——前期必须留扩展口。
+订单 电商的&#34;交易凭证&#34;。表面是流程，实质是一个状态机。
+id: order_id 结构: 主单 &#43; 子单 &#43; 订单项 状态: 12&#43; 种 ⚠️ PITFALL: 状态机设计时，少写了&#34;已退款&#34;或&#34;部分退款&#34;分支，三个月后业务要做退款功能时整库重写。父子订单、合并支付、拆单发货也要早期想清楚。
+库存 电商CTO的噩梦。表面是加减，实际是四种库存的精细运营。
+实物库存: 仓库里真实数量 可销售: 上架 &#43; 未锁定 预占/锁定: 下单但未支付 ⚠️ PITFALL: 秒杀时如果用单一库存字段，要么超卖要么少卖。必须区分&#34;预占库存&#34;和&#34;实际扣减&#34;两个时机，订单超时不付还要回滚。
+支付 资金的入口。订单和资金流的&#34;翻译官&#34;，跟钱直接挂钩。
+支付单: 独立于订单 通道: 微信 / 支付宝 / 银联 对账: 每日 T&#43;1 ⚠️ PITFALL: 支付回调和订单状态更新必须解耦——网络抖动时回调可能重复、延迟、甚至丢失。幂等设计和状态机校验是命门。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-06-26 10:00:00 +0800 CST'>June 26, 2026</span>&nbsp;·&nbsp;<span>2 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to 电商核心业务模型图谱" href="/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">JavaScript Async Patterns
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>从回调到 Promise，再到 async/await：异步之河的摆渡人
+我初识 JavaScript 时，它像一条湍急而混乱的河。那时我们用回调函数过河，层层嵌套，像在河心垒石。一个接一个的函数压下来，代码缩进越来越深，直到变成所谓的“回调地狱”——维护代码的人，像困在迷宫里的守夜人，再也找不到出口。
+后来，Promise 出现了。它像一座桥，横跨在异步的河流之上。 “.then()” 像桥上的灯，一步步照亮前行的路； “.catch()” 则是桥下的网，哪怕失足，也不会坠入深渊。我们终于可以把“成功”与“失败”清晰地分开，不再让错误在层层回调中悄然蒸发。
+可桥再稳，走的人多了，依旧会觉得疲惫。于是 ES2017 带来了&#34;async/await&#34;，像一艘平稳的渡轮。你站在甲板上，代码看起来像同步的那样优雅，却依旧拥有异步的力量。 “await” 是短暂的停顿，像呼吸之间的留白； “async” 则是航向，宣告这个函数终将驶向远方。
+但河流总有暗礁。忘记 “await”，就像跳上一艘无人掌舵的小船，不知何时就会撞上礁石；滥用&#34;try/catch&#34;，则可能把错误吞进漆黑的河水，再也浮不上来；而在循环里不加思索地使用 “await”，又会把本该并行的溪流，硬生生堵成一条窄渠。
+异步的进化，不只是语法的变迁，更是思维方式的成熟。从混乱到秩序，从绕行到直抵，我们学会了在不确定中寻找确定，在等待中保持清醒。
+JavaScript 的异步之旅，从未停止流动。而我们，也只是这条河上的摆渡人——愿每一次&#34;await&#34;，都值得被温柔地 “resolve”。
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-03-20 10:00:00 +0800 CST'>March 20, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to JavaScript Async Patterns" href="/posts/javascript-async-patterns/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Understanding Go Modules
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Understanding Go Modules
+我最初接触 Go 的时候，它像一座没有围墙的城。代码就那样散落在 “$GOPATH/src” 下面，像旧书店里堆得老高的纸卷——你知道它们有用，却总在找某本书时碰落一整摞。那时我们常说：“GOPATH 就是家。”可家的规矩太宽，宽到依赖飘在风里，今天能跑的程序，明天就可能因为一个第三方库的更新而崩塌。
+后来，Go Modules 来了。
+它不是一声惊雷，而像一场迟来的春雨。第一次在终端敲下 “go mod init”，屏幕上安静地吐出一行 “go.mod”，那一刻，我竟有些莫名的感动。这个文件不大，却像给漂泊的代码发了身份证：谁是你，你依赖谁，你要去往哪里的版本。不再盲从 “master” 分支的潮水，不再被不可控的更新淹没。 “v1.0.0”、 “v1.2.3”——语义化版本像灯塔，把黑夜里的船一盏盏引回港湾。
+我开始学着理解它，而不只是使用它。
+“go.sum” 不是累赘，是守护者。它默默记下每一个模块的哈希值，像守夜人核对每一个进出城门的旅人。你不常注意它，但它一直在那里，确保你拿到的，正是你以为的那个世界。
+“replace” 是我调试时的小秘密，本地替换掉远程包，像把远方的山搬进后院，细细端详。
+“exclude” 则是温柔的拒绝——有些版本，注定不该与你同行。
+最动人的是 “minimal version selection”。Go 没有选择“最新”，而是选择“足够”。它不相信永远向上，只相信可重复、可依赖。这像极了成年人的爱情：不追最热烈，只求最安稳。
+如今，我的项目整齐得像一座座小小的城邦。 “go.mod” 是宪法， “go.sum” 是历史， “vendor” 是粮仓。我再也不必在深夜因为一个未知的依赖错误而惊醒。代码终于可以安心地生长，像树一样，年轮清晰，根脉扎实。
+Understanding Go Modules，或许不只是理解一个工具。
+它让我明白：真正的自由，从来不是无拘无束，而是清楚地知道——边界在哪里，归宿在何方。
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-03-05 10:00:00 +0800 CST'>March 5, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to Understanding Go Modules" href="/posts/understanding-go-modules/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">CSS Grid Layout Guide
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>CSS Grid is a powerful layout system that makes responsive design much easier. Learn about grid templates, auto-fit, and responsive columns.
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-02-01 10:00:00 +0800 CST'>February 1, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to CSS Grid Layout Guide" href="/posts/css-grid-layout-guide/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Getting Started with Hugo Static Sites
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Hugo is one of the fastest static site generators. In this post, we explore how to set up a new site, choose a theme, and start writing content.
+</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-01-15 10:00:00 +0800 CST'>January 15, 2025</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to Getting Started with Hugo Static Sites" href="/posts/getting-started-with-hugo-static-sites/"></a>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>© 2026 Eli He</span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        
+        const scrollPosition = localStorage.getItem("menu-scroll-position");
+        if (scrollPosition) {
+            menu.scrollLeft = parseInt(scrollPosition, 10);
+        }
+        
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        const html = document.querySelector("html");
+        if (html.dataset.theme === "dark") {
+            html.dataset.theme = 'light';
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            html.dataset.theme = 'dark';
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

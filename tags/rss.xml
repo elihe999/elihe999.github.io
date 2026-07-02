@@ -8,9 +8,30 @@
     <language>en-us</language>
     <managingEditor>eli@example.com (Eli He)</managingEditor>
     <webMaster>eli@example.com (Eli He)</webMaster>
-    <copyright>{year} Eli He</copyright>
-    <lastBuildDate>Fri, 26 Jun 2026 10:00:00 +0800</lastBuildDate>
+    <copyright>2026 Eli He</copyright>
+    <lastBuildDate>Thu, 02 Jul 2026 15:00:00 +0800</lastBuildDate>
     <atom:link href="/tags/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ai</title>
+      <link>/tags/ai/</link>
+      <pubDate>Thu, 02 Jul 2026 15:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Programming</title>
+      <link>/tags/programming/</link>
+      <pubDate>Thu, 02 Jul 2026 15:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reflection</title>
+      <link>/tags/reflection/</link>
+      <pubDate>Thu, 02 Jul 2026 15:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/reflection/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Business-Model</title>
       <link>/tags/business-model/</link>
@@ -37,13 +58,6 @@
       <link>/tags/javascript/</link>
       <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
       <guid>/tags/javascript/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Programming</title>
-      <link>/tags/programming/</link>
-      <pubDate>Thu, 20 Mar 2025 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
-      <guid>/tags/programming/</guid>
       <description></description>
     </item>
     <item>

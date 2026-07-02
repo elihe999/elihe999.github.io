@@ -8,9 +8,29 @@
     <language>en-us</language>
     <managingEditor>eli@example.com (Eli He)</managingEditor>
     <webMaster>eli@example.com (Eli He)</webMaster>
-    <copyright>{year} Eli He</copyright>
-    <lastBuildDate>Fri, 26 Jun 2026 10:00:00 +0800</lastBuildDate>
+    <copyright>2026 Eli He</copyright>
+    <lastBuildDate>Thu, 02 Jul 2026 15:00:00 +0800</lastBuildDate>
     <atom:link href="/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>与神对话的时代，我选择失语</title>
+      <link>/posts/%E4%B8%8E%E7%A5%9E%E5%AF%B9%E8%AF%9D%E7%9A%84%E6%97%B6%E4%BB%A3%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%B1%E8%AF%AD/</link>
+      <pubDate>Thu, 02 Jul 2026 15:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/%E4%B8%8E%E7%A5%9E%E5%AF%B9%E8%AF%9D%E7%9A%84%E6%97%B6%E4%BB%A3%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%B1%E8%AF%AD/</guid>
+      <description>&lt;p&gt;我已经记不清，上一次为了一个指针越界而彻夜未眠，是在哪一年的雨季。&lt;/p&gt;
+&lt;p&gt;那时候的代码是有脾气的。每一行代码都像是精心修剪的盆景，每一个 Segmentation Fault 都是一场小型的地震。我会盯着屏幕，像解读罗塞塔石碑一样去揣摩编译器的心思，手指在机械键盘上敲击出某种近乎仪式的节奏。那时的痛苦很具体，快乐也很具体——当程序终于跑通，绿灯亮起的那一刻，那种创造者的孤傲，足以支撑我度过整个潮湿的夏天。&lt;/p&gt;
+&lt;p&gt;现在不一样了。&lt;/p&gt;
+&lt;p&gt;现在我只需要动动嘴。我说，&amp;ldquo;帮我写一个分布式锁，要考虑红锁算法和时钟跳跃的问题。&amp;rdquo; 几乎是瞬间，整齐划一、注释详尽、甚至附带单元测试用例的代码块就流淌了出来。它太完美了，完美得像是从教科书里撕下来的范本，没有一丝烟火气，也没有一丝属于人类的笨拙。&lt;/p&gt;
+&lt;p&gt;AI 实在太好用了。好用到让人感到一种彻骨的寒意。&lt;/p&gt;
+&lt;p&gt;我就像一个拥有了阿拉丁神灯的人，不用再挥汗如雨地挖掘宝藏，只需要擦拭神灯，看着愿望自动实现。软件开发的逻辑被彻底颠覆了：从&amp;quot;构建&amp;quot;变成了&amp;quot;描述&amp;quot;，从&amp;quot;工匠&amp;quot;变成了&amp;quot;监工&amp;quot;。&lt;/p&gt;
+&lt;p&gt;但我失去了什么？&lt;/p&gt;
+&lt;p&gt;我失去了那种在迷雾中摸索，最后亲手触碰到真理边界的战栗。那些曾经让我抓耳挠腮的算法细节，如今只是黑盒里吐出的标准答案。我的手指不再因为思考而颤抖，它们只是负责复制和粘贴。我的脑子不再因为优化而沸腾，它只是负责判断这段代码&amp;quot;看起来对不对&amp;quot;。&lt;/p&gt;
+&lt;p&gt;我开始怀念那些&amp;quot;无用&amp;quot;的时刻。&lt;/p&gt;
+&lt;p&gt;在这个效率至上的时代，我们消灭了 Bug，也顺带消灭了程序员这个职业里最珍贵的&amp;quot;手感&amp;quot;。我们不再需要理解底层逻辑的泥泞，我们只需要结果。这不仅仅是工具的革新，这是人类在技术面前的一次集体退位。&lt;/p&gt;
+&lt;p&gt;今晚，窗外下着和那年一样的雨。我看着屏幕上由 AI 生成的、优雅得令人绝望的代码，突然感到一种前所未有的空虚。&lt;/p&gt;
+&lt;p&gt;我已经很久没有亲自动手写代码了。&lt;/p&gt;
+&lt;p&gt;我也已经很久，没有真正拥有过那段代码了。&lt;/p&gt;
+&lt;p&gt;在这个与神对话的时代，我选择了沉默，也选择了失语。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>电商核心业务模型图谱</title>
       <link>/posts/%E7%94%B5%E5%95%86%E6%A0%B8%E5%BF%83%E4%B8%9A%E5%8A%A1%E6%A8%A1%E5%9E%8B%E5%9B%BE%E8%B0%B1/</link>

@@ -9,8 +9,255 @@
     <managingEditor>eli@example.com (Eli He)</managingEditor>
     <webMaster>eli@example.com (Eli He)</webMaster>
     <copyright>2026 Eli He</copyright>
-    <lastBuildDate>Thu, 02 Jul 2026 15:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jul 2026 10:00:00 +0800</lastBuildDate>
     <atom:link href="/categories/tech/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>微服务系统架构图 · 数据中台</title>
+      <link>/posts/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE-%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0/</link>
+      <pubDate>Mon, 06 Jul 2026 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE-%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0/</guid>
+      <description>&lt;p&gt;微服务架构是现代企业系统的核心范式。本文通过一张交互式架构图，展示从&lt;strong&gt;网关层&lt;/strong&gt;到&lt;strong&gt;业务服务层&lt;/strong&gt;、&lt;strong&gt;数据中台层&lt;/strong&gt;、&lt;strong&gt;基础设施层&lt;/strong&gt;的完整数据流与服务依赖关系。&lt;/p&gt;
+
+&lt;style&gt;
+  :root{
+    --ink:#1F2937; --ink2:#475467; --muted:#667085; --line:#D0D5DD;
+    --gw-fill:#F5F3FF; --gw-stroke:#7A5AF8;
+    --biz-fill:#EFF8FF; --biz-stroke:#175CD3;
+    --data-fill:#FFF7ED; --data-stroke:#C4320A;
+    --infra-fill:#ECFDF3; --infra-stroke:#027A48;
+  }
+  .micro-wrap{max-width:1280px; margin:0 auto;}
+  .micro-wrap h2{font-size:26px; margin:0 0 4px; letter-spacing:.5px; color:var(--ink);}
+  .micro-sub{color:var(--muted); font-size:14px; margin:0 0 18px;}
+  .micro-legend{
+    display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+    background:#fff; border:1.5px solid var(--line); border-radius:12px;
+    padding:12px 16px; margin-bottom:18px; box-shadow:2px 3px 0 rgba(31,41,55,.06);
+  }
+  .micro-legend b{font-size:13px; color:var(--ink2); margin-right:6px;}
+  .lg-item{display:flex; align-items:center; gap:7px; font-size:13px; color:var(--ink2);}
+  .lg-swatch{width:22px; height:14px; border:2px solid; border-radius:4px;}
+  .micro-hint{margin-left:auto; font-size:12px; color:var(--muted);}
+  .micro-stage{
+    background:#fff; border:1.5px solid var(--line); border-radius:14px;
+    padding:10px; box-shadow:3px 4px 0 rgba(31,41,55,.07);
+    overflow:auto;
+  }
+  .micro-stage svg{display:block; width:100%; height:auto;}
+  .micro-stage .edge{
+    fill:none; stroke:#94A3B8; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+    transition:stroke .18s, stroke-width .18s, opacity .18s;
+  }
+  .micro-stage .edge-label{
+    font-size:11px; fill:var(--muted); paint-order:stroke;
+    stroke:#fff; stroke-width:3px; stroke-linejoin:round;
+    transition:fill .18s, opacity .18s;
+  }
+  .micro-stage .node{cursor:pointer;}
+  .micro-stage .node-box{transition:stroke-width .18s, filter .18s;}
+  .micro-stage .node-name{font-size:17px; font-weight:700; fill:var(--ink);}
+  .micro-stage .node-sub{font-size:12px; fill:var(--muted);}
+  .micro-stage svg.dim .edge{stroke:#E6E8EC; opacity:.55;}
+  .micro-stage svg.dim .edge-label{opacity:.35;}
+  .micro-stage svg.dim .node{opacity:.4;}
+  .micro-stage svg.dim .edge.hl{stroke:#7A5AF8; stroke-width:3.4; opacity:1;}
+  .micro-stage svg.dim .edge-label.hl{fill:#7A5AF8; opacity:1;}
+  .micro-stage svg.dim .node.hl{opacity:1;}
+  .micro-stage svg.dim .node.hl .node-box{stroke-width:3.6;}
+  .micro-stage svg:not(.dim) .node:hover .node-box{stroke-width:3.2;}
+&lt;/style&gt;
+
+&lt;div class=&#34;micro-wrap&#34;&gt;
+  &lt;div class=&#34;micro-legend&#34;&gt;
+    &lt;b&gt;层级图例&lt;/b&gt;
+    &lt;div class=&#34;lg-item&#34;&gt;&lt;span class=&#34;lg-swatch&#34; style=&#34;background:var(--gw-fill);border-color:var(--gw-stroke)&#34;&gt;&lt;/span&gt;网关层&lt;/div&gt;
+    &lt;div class=&#34;lg-item&#34;&gt;&lt;span class=&#34;lg-swatch&#34; style=&#34;background:var(--biz-fill);border-color:var(--biz-stroke)&#34;&gt;&lt;/span&gt;业务服务层&lt;/div&gt;
+    &lt;div class=&#34;lg-item&#34;&gt;&lt;span class=&#34;lg-swatch&#34; style=&#34;background:var(--data-fill);border-color:var(--data-stroke)&#34;&gt;&lt;/span&gt;数据中台层&lt;/div&gt;
+    &lt;div class=&#34;lg-item&#34;&gt;&lt;span class=&#34;lg-swatch&#34; style=&#34;background:var(--infra-fill);border-color:var(--infra-stroke)&#34;&gt;&lt;/span&gt;基础设施层&lt;/div&gt;
+    &lt;span class=&#34;micro-hint&#34;&gt;提示：悬停或点击服务节点，可高亮其所有连接关系&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&#34;micro-stage&#34;&gt;
+    &lt;svg viewBox=&#34;0 0 1240 760&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; role=&#34;img&#34;
+         aria-label=&#34;微服务系统架构图，包含网关、业务服务、数据中台与基础设施四层&#34;&gt;
+      &lt;defs&gt;
+        &lt;pattern id=&#34;grid&#34; width=&#34;30&#34; height=&#34;30&#34; patternUnits=&#34;userSpaceOnUse&#34;&gt;
+          &lt;circle cx=&#34;15&#34; cy=&#34;15&#34; r=&#34;1.1&#34; fill=&#34;#E7E9EE&#34;/&gt;
+        &lt;/pattern&gt;
+        &lt;filter id=&#34;rough&#34; x=&#34;-6%&#34; y=&#34;-6%&#34; width=&#34;112%&#34; height=&#34;118%&#34;&gt;
+          &lt;feTurbulence type=&#34;fractalNoise&#34; baseFrequency=&#34;0.017&#34; numOctaves=&#34;3&#34; seed=&#34;3&#34; result=&#34;n&#34;/&gt;
+          &lt;feDisplacementMap in=&#34;SourceGraphic&#34; in2=&#34;n&#34; scale=&#34;5.2&#34; xChannelSelector=&#34;R&#34; yChannelSelector=&#34;G&#34;/&gt;
+        &lt;/filter&gt;
+        &lt;filter id=&#34;roughLine&#34; x=&#34;-4%&#34; y=&#34;-20%&#34; width=&#34;108%&#34; height=&#34;140%&#34;&gt;
+          &lt;feTurbulence type=&#34;fractalNoise&#34; baseFrequency=&#34;0.024&#34; numOctaves=&#34;2&#34; seed=&#34;7&#34; result=&#34;n&#34;/&gt;
+          &lt;feDisplacementMap in=&#34;SourceGraphic&#34; in2=&#34;n&#34; scale=&#34;3.4&#34; xChannelSelector=&#34;R&#34; yChannelSelector=&#34;G&#34;/&gt;
+        &lt;/filter&gt;
+        &lt;marker id=&#34;arrow&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;8.5&#34; refY=&#34;5&#34;
+                markerWidth=&#34;7.5&#34; markerHeight=&#34;7.5&#34; orient=&#34;auto-start-reverse&#34;&gt;
+          &lt;path d=&#34;M0.5,0.8 L9,5 L0.5,9.2 L2.6,5 Z&#34; fill=&#34;context-stroke&#34;/&gt;
+        &lt;/marker&gt;
+        &lt;marker id=&#34;arrowMute&#34; viewBox=&#34;0 0 10 10&#34; refX=&#34;8.5&#34; refY=&#34;5&#34;
+                markerWidth=&#34;7.5&#34; markerHeight=&#34;7.5&#34; orient=&#34;auto-start-reverse&#34;&gt;
+          &lt;path d=&#34;M0.5,0.8 L9,5 L0.5,9.2 L2.6,5 Z&#34; fill=&#34;#94A3B8&#34;/&gt;
+        &lt;/marker&gt;
+      &lt;/defs&gt;
+
+      &lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;1240&#34; height=&#34;760&#34; fill=&#34;#FFFFFF&#34;/&gt;
+      &lt;rect x=&#34;0&#34; y=&#34;0&#34; width=&#34;1240&#34; height=&#34;760&#34; fill=&#34;url(#grid)&#34;/&gt;
+
+      &lt;g opacity=&#34;0.5&#34;&gt;
+        &lt;rect x=&#34;18&#34; y=&#34;40&#34; width=&#34;1204&#34; height=&#34;150&#34; rx=&#34;14&#34; fill=&#34;#FBFAFF&#34; stroke=&#34;#EDE9FE&#34; stroke-width=&#34;1.5&#34;/&gt;
+        &lt;rect x=&#34;18&#34; y=&#34;200&#34; width=&#34;1204&#34; height=&#34;150&#34; rx=&#34;14&#34; fill=&#34;#F6FBFF&#34; stroke=&#34;#DBEAFE&#34; stroke-width=&#34;1.5&#34;/&gt;
+        &lt;rect x=&#34;18&#34; y=&#34;360&#34; width=&#34;1204&#34; height=&#34;150&#34; rx=&#34;14&#34; fill=&#34;#FFFBF4&#34; stroke=&#34;#FCE7C2&#34; stroke-width=&#34;1.5&#34;/&gt;
+        &lt;rect x=&#34;18&#34; y=&#34;520&#34; width=&#34;1204&#34; height=&#34;150&#34; rx=&#34;14&#34; fill=&#34;#F4FCF6&#34; stroke=&#34;#BBF7D0&#34; stroke-width=&#34;1.5&#34;/&gt;
+      &lt;/g&gt;
+      &lt;g font-size=&#34;12&#34; fill=&#34;#9AA1AC&#34; font-family=&#34;&#39;Segoe Print&#39;,cursive&#34;&gt;
+        &lt;text x=&#34;32&#34; y=&#34;58&#34;&gt;网关层 · Gateway&lt;/text&gt;
+        &lt;text x=&#34;32&#34; y=&#34;218&#34;&gt;业务服务层 · Business&lt;/text&gt;
+        &lt;text x=&#34;32&#34; y=&#34;378&#34;&gt;数据中台层 · Data Middle Platform&lt;/text&gt;
+        &lt;text x=&#34;32&#34; y=&#34;538&#34;&gt;基础设施层 · Infrastructure&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g id=&#34;edges&#34; filter=&#34;url(#roughLine)&#34;&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;api-gw&#34;   data-to=&#34;user-svc&#34;  d=&#34;M525,106 Q330,150 175,200&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;api-gw&#34;   data-to=&#34;notify-svc&#34; d=&#34;M715,106 Q910,150 1065,200&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;api-gw&#34;   data-to=&#34;data-svc&#34;  d=&#34;M620,152 Q820,250 1010,360&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;data-in&#34;  data-to=&#34;data-model&#34; d=&#34;M325,406 Q360,396 395,406&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;data-model&#34; data-to=&#34;data-asset&#34; d=&#34;M585,406 Q620,396 655,406&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;data-asset&#34; data-to=&#34;data-svc&#34;  d=&#34;M845,406 Q880,396 915,406&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;data-in&#34;  data-to=&#34;db-pg&#34;      d=&#34;M230,452 Q510,505 795,540&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;data-model&#34; data-to=&#34;db-pg&#34;    d=&#34;M490,452 Q645,500 795,540&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;data-svc&#34; data-to=&#34;db-pg&#34;      d=&#34;M1010,452 Q900,500 795,540&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;user-svc&#34; data-to=&#34;db-pg&#34;      d=&#34;M210,292 L210,315 L620,315 L620,500 L795,500 L795,540&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;user-svc&#34; data-to=&#34;mq-kafka&#34;   d=&#34;M150,292 L150,332 L360,332 L360,540&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+        &lt;path class=&#34;edge&#34; data-from=&#34;mq-kafka&#34; data-to=&#34;notify-svc&#34; d=&#34;M395,632 L395,662 L905,662 L905,292 L1065,292&#34; marker-end=&#34;url(#arrow)&#34;/&gt;
+      &lt;/g&gt;
+      &lt;g id=&#34;edge-labels&#34; text-anchor=&#34;middle&#34;&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;345&#34; y=&#34;142&#34;&gt;路由&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;900&#34; y=&#34;142&#34;&gt;路由&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;842&#34; y=&#34;252&#34;&gt;数据API&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;360&#34; y=&#34;386&#34;&gt;原始数据&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;620&#34; y=&#34;386&#34;&gt;标准数据&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;880&#34; y=&#34;386&#34;&gt;元数据&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;430&#34; y=&#34;492&#34;&gt;抽取&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;638&#34; y=&#34;478&#34;&gt;落库&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;915&#34; y=&#34;492&#34;&gt;读取&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;710&#34; y=&#34;492&#34;&gt;读写&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;255&#34; y=&#34;324&#34;&gt;发布事件&lt;/text&gt;
+        &lt;text class=&#34;edge-label&#34; x=&#34;650&#34; y=&#34;654&#34;&gt;消费事件&lt;/text&gt;
+      &lt;/g&gt;
+
+      &lt;g id=&#34;nodes&#34;&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;api-gw&#34; transform=&#34;translate(525,60)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--gw-fill)&#34; stroke=&#34;var(--gw-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;API Gateway&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;统一入口 · 路由 / 鉴权&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;user-svc&#34; transform=&#34;translate(80,200)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--biz-fill)&#34; stroke=&#34;var(--biz-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;User Service&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;用户服务&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;notify-svc&#34; transform=&#34;translate(970,200)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--biz-fill)&#34; stroke=&#34;var(--biz-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;Notification Service&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;通知服务&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;data-in&#34; transform=&#34;translate(135,360)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--data-fill)&#34; stroke=&#34;var(--data-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;数据接入&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;Data Ingestion · 异构抽取&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;data-model&#34; transform=&#34;translate(395,360)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--data-fill)&#34; stroke=&#34;var(--data-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;数据建模&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;Data Modeling · 原始→标准&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;data-asset&#34; transform=&#34;translate(655,360)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--data-fill)&#34; stroke=&#34;var(--data-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;数据资产&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;Data Asset · 元数据管理&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;data-svc&#34; transform=&#34;translate(915,360)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--data-fill)&#34; stroke=&#34;var(--data-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;数据服务&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;Data Serving · 对外推送&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;mq-kafka&#34; transform=&#34;translate(300,540)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--infra-fill)&#34; stroke=&#34;var(--infra-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;Message Queue&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;Kafka · 异步事件总线&lt;/text&gt;
+        &lt;/g&gt;
+        &lt;g class=&#34;node&#34; data-id=&#34;db-pg&#34; transform=&#34;translate(700,540)&#34;&gt;
+          &lt;rect class=&#34;node-box&#34; width=&#34;190&#34; height=&#34;92&#34; rx=&#34;10&#34; filter=&#34;url(#rough)&#34;
+                fill=&#34;var(--infra-fill)&#34; stroke=&#34;var(--infra-stroke)&#34; stroke-width=&#34;2.2&#34;/&gt;
+          &lt;text class=&#34;node-name&#34; x=&#34;95&#34; y=&#34;40&#34; text-anchor=&#34;middle&#34;&gt;Database&lt;/text&gt;
+          &lt;text class=&#34;node-sub&#34;  x=&#34;95&#34; y=&#34;62&#34; text-anchor=&#34;middle&#34;&gt;PostgreSQL · 持久化&lt;/text&gt;
+        &lt;/g&gt;
+      &lt;/g&gt;
+
+      &lt;script&gt;
+      (function(){
+        var svg = document.querySelector(&#39;.micro-stage svg&#39;);
+        var nodes = Array.prototype.slice.call(svg.querySelectorAll(&#39;.node&#39;));
+        var edges = Array.prototype.slice.call(svg.querySelectorAll(&#39;.edge&#39;));
+        var labels = Array.prototype.slice.call(svg.querySelectorAll(&#39;.edge-label&#39;));
+
+        function clear(){
+          svg.classList.remove(&#39;dim&#39;);
+          edges.forEach(function(e){ e.classList.remove(&#39;hl&#39;); });
+          labels.forEach(function(l){ l.classList.remove(&#39;hl&#39;); });
+          nodes.forEach(function(n){ n.classList.remove(&#39;hl&#39;); });
+        }
+        function focus(id){
+          svg.classList.add(&#39;dim&#39;);
+          var conn = {}; conn[id]=1;
+          edges.forEach(function(e,i){
+            var f=e.getAttribute(&#39;data-from&#39;), t=e.getAttribute(&#39;data-to&#39;);
+            if(f===id || t===id){
+              e.classList.add(&#39;hl&#39;);
+              if(labels[i]) labels[i].classList.add(&#39;hl&#39;);
+              conn[f]=1; conn[t]=1;
+            }
+          });
+          nodes.forEach(function(n){
+            if(conn[n.getAttribute(&#39;data-id&#39;)]) n.classList.add(&#39;hl&#39;);
+          });
+        }
+
+        var pinned = null;
+        nodes.forEach(function(n){
+          var id = n.getAttribute(&#39;data-id&#39;);
+          n.addEventListener(&#39;mouseenter&#39;, function(){ if(!pinned) focus(id); });
+          n.addEventListener(&#39;mouseleave&#39;, function(){ if(!pinned) clear(); });
+          n.addEventListener(&#39;click&#39;, function(ev){
+            ev.stopPropagation();
+            if(pinned===id){ pinned=null; clear(); }
+            else { pinned=id; focus(id); }
+          });
+        });
+        svg.addEventListener(&#39;click&#39;, function(ev){
+          if(!ev.target.closest(&#39;.node&#39;)){ pinned=null; clear(); }
+        });
+      })();
+      &lt;/script&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;h2 id=&#34;架构解读&#34;&gt;架构解读&lt;/h2&gt;
+&lt;h3 id=&#34;网关层&#34;&gt;网关层&lt;/h3&gt;
+&lt;p&gt;所有外部请求通过 &lt;strong&gt;API Gateway&lt;/strong&gt; 统一入口，完成路由分发与鉴权校验后，按业务线转发至对应服务。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>与神对话的时代，我选择失语</title>
       <link>/posts/%E4%B8%8E%E7%A5%9E%E5%AF%B9%E8%AF%9D%E7%9A%84%E6%97%B6%E4%BB%A3%E6%88%91%E9%80%89%E6%8B%A9%E5%A4%B1%E8%AF%AD/</link>

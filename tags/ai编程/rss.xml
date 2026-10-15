@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>AI编程 on Eli He&#39;s Blog</title>
+    <link>/tags/ai%E7%BC%96%E7%A8%8B/</link>
+    <description>Recent content in AI编程 on Eli He&#39;s Blog</description>
+    <generator>Hugo -- 0.158.0</generator>
+    <language>en-us</language>
+    <managingEditor>eli@example.com (Eli He)</managingEditor>
+    <webMaster>eli@example.com (Eli He)</webMaster>
+    <copyright>2026 Eli He</copyright>
+    <lastBuildDate>Thu, 15 Oct 2026 16:26:24 +0800</lastBuildDate>
+    <atom:link href="/tags/ai%E7%BC%96%E7%A8%8B/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>让AI先对齐再动手-SDD科普</title>
+      <link>/posts/%E8%AE%A9ai%E5%85%88%E5%AF%B9%E9%BD%90%E5%86%8D%E5%8A%A8%E6%89%8B-sdd%E7%A7%91%E6%99%AE/</link>
+      <pubDate>Thu, 15 Oct 2026 16:26:24 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/posts/%E8%AE%A9ai%E5%85%88%E5%AF%B9%E9%BD%90%E5%86%8D%E5%8A%A8%E6%89%8B-sdd%E7%A7%91%E6%99%AE/</guid>
+      <description>&lt;h1 id=&#34;我的-sdd-笔记整理规格门禁以及凭什么说做完了&#34;&gt;我的 SDD 笔记整理：规格、门禁，以及凭什么说做完了&lt;/h1&gt;
+&lt;p&gt;翻了一遍仓库里跟规范驱动开发有关的笔记：&lt;code&gt;Spec/&lt;/code&gt; 六篇、&lt;code&gt;模板/&lt;/code&gt; 里三个版本的 ADR、&lt;code&gt;AI开发流程/&lt;/code&gt; 的测试与 OpenAPI，加上散在 &lt;code&gt;AI/&lt;/code&gt; 里的上下文和多代理记录。它们记的时间点不同、粒度也不同，但串起来读，其实只在回答三个问题。&lt;/p&gt;
+&lt;h2 id=&#34;一规格真正值钱的是两个字段&#34;&gt;一、规格真正值钱的是两个字段&lt;/h2&gt;
+&lt;p&gt;[[基本流程]] 里列了 spec 该有的六项：Problem Statement、Success Metrics、User Stories、Acceptance Criteria、Constraints，外加 Goals / &lt;strong&gt;Non-Goals&lt;/strong&gt;。同一篇里还有一段登录功能的例子，需求写成 &lt;code&gt;SHALL rate-limit to 5 attempts per 15 minutes&lt;/code&gt;，场景写到&amp;quot;第 6 次失败 → 提示限流&amp;quot;，约束写到&amp;quot;不得暴露邮箱是否存在&amp;quot;。&lt;/p&gt;
+&lt;p&gt;这些字段我一开始当成格式要求，后来发现真正起作用的是其中两个。&lt;strong&gt;Non-goals&lt;/strong&gt; 挡的是 AI 的静默假设和过度工程——超出范围的猜想不再由它自行决定；&lt;strong&gt;可观察的验收标准&lt;/strong&gt;挡的是&amp;quot;应该没问题了&amp;quot;。[[constitution]] 的四条原则里就有一句&amp;quot;验收标准必须可观察&amp;quot;，而 [[基本流程]] 在 Success Metrics 后面直接标了&amp;quot;必须可量化&amp;quot;。写不出可验证条款的时候，通常不是模型的问题，是我自己没想清楚。&lt;/p&gt;
+&lt;p&gt;顺带一提，[[基本流程]] 的 Feature Spec 模板还留了一格边界条件矩阵：空值缺省、重复幂等、并发竞态、权限可见性。这四格是我漏得最多的地方。&lt;/p&gt;
+&lt;h2 id=&#34;二一次变更不是一个文件是五件套&#34;&gt;二、一次变更不是一个文件，是五件套&lt;/h2&gt;
+&lt;p&gt;[[基本流程]] 里那个 &lt;code&gt;docs/specs/checkout-coupon/&lt;/code&gt; 目录我抄下来了：&lt;code&gt;proposal.md&lt;/code&gt;（为什么现在做、影响谁）、&lt;code&gt;spec.md&lt;/code&gt;（需求和场景）、&lt;code&gt;design.md&lt;/code&gt;（决策和取舍）、&lt;code&gt;tasks.md&lt;/code&gt;（可评审的实现切片）、&lt;code&gt;test-evidence.md&lt;/code&gt;（合并前必须提供的证据）。&lt;/p&gt;
+&lt;p&gt;入口是 [[Spec/spec|spec.md]] 那份提案模板，带 Draft / Review / Approved 状态机；末尾有一栏 Evidence Required——测试、日志或指标、手工核对、回滚信号，四种证据在开工前就得声明，不是事后补。&lt;/p&gt;
+&lt;p&gt;不同工种的规格另有模板：[[db-spec-template]] 要求写迁移步骤、回填策略、回滚方案，还有一栏&lt;strong&gt;读写兼容窗口&lt;/strong&gt;；API 模板要求写向后兼容说明和废弃策略。取舍记录用 ADR，[[ADR|模板目录]] 里存了三种版本：最简的 Nygard（状态 / 背景 / 决定 / 后果）、MADR 完整版（多了决策者、驱动因素、候选方案）、以及我自己那份五行版。MADR 里有条提示值得记住：候选方案&lt;strong&gt;不要遗漏最终被否决的选项&lt;/strong&gt;——被排除的路径正是后人不重复踩坑的原因。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

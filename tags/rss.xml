@@ -9,8 +9,50 @@
     <managingEditor>eli@example.com (Eli He)</managingEditor>
     <webMaster>eli@example.com (Eli He)</webMaster>
     <copyright>2026 Eli He</copyright>
-    <lastBuildDate>Thu, 02 Jul 2026 15:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 15 Oct 2026 16:26:24 +0800</lastBuildDate>
     <atom:link href="/tags/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI编程</title>
+      <link>/tags/ai%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Thu, 15 Oct 2026 16:26:24 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/ai%E7%BC%96%E7%A8%8B/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>知识管理</title>
+      <link>/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/</link>
+      <pubDate>Thu, 15 Oct 2026 16:26:24 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>规范驱动开发</title>
+      <link>/tags/%E8%A7%84%E8%8C%83%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Thu, 15 Oct 2026 16:26:24 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/%E8%A7%84%E8%8C%83%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Architecture</title>
+      <link>/tags/architecture/</link>
+      <pubDate>Mon, 06 Jul 2026 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/architecture/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Data-Platform</title>
+      <link>/tags/data-platform/</link>
+      <pubDate>Mon, 06 Jul 2026 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/data-platform/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Microservices</title>
+      <link>/tags/microservices/</link>
+      <pubDate>Mon, 06 Jul 2026 10:00:00 +0800</pubDate><author>eli@example.com (Eli He)</author>
+      <guid>/tags/microservices/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Ai</title>
       <link>/tags/ai/</link>

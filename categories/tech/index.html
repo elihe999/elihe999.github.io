@@ -143,6 +143,20 @@
 
 <article class="post-entry tag-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">微服务系统架构图 · 数据中台
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>微服务架构是现代企业系统的核心范式。本文通过一张交互式架构图，展示从网关层到业务服务层、数据中台层、基础设施层的完整数据流与服务依赖关系。
+层级图例 网关层 业务服务层 数据中台层 基础设施层 提示：悬停或点击服务节点，可高亮其所有连接关系 网关层 · Gateway 业务服务层 · Business 数据中台层 · Data Middle Platform 基础设施层 · Infrastructure 路由 路由 数据API 原始数据 标准数据 元数据 抽取 落库 读取 读写 发布事件 消费事件 API Gateway 统一入口 · 路由 / 鉴权 User Service 用户服务 Notification Service 通知服务 数据接入 Data Ingestion · 异构抽取 数据建模 Data Modeling · 原始→标准 数据资产 Data Asset · 元数据管理 数据服务 Data Serving · 对外推送 Message Queue Kafka · 异步事件总线 Database PostgreSQL · 持久化 架构解读 网关层 所有外部请求通过 API Gateway 统一入口，完成路由分发与鉴权校验后，按业务线转发至对应服务。
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2026-07-06 10:00:00 +0800 CST'>July 6, 2026</span>&nbsp;·&nbsp;<span>1 min</span>&nbsp;·&nbsp;<span>Eli He</span></footer>
+  <a class="entry-link" aria-label="post link to 微服务系统架构图 · 数据中台" href="/posts/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE-%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%8F%B0/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">与神对话的时代，我选择失语
     </h2>
   </header>
